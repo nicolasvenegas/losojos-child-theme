@@ -1,0 +1,4 @@
+<?php
+/**
+ * Los Ojos Theme
+ */
