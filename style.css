@@ -12,28 +12,25 @@ Text Domain: losojos
 */
 
 
-.project-taxonomies {
-    margin-top: 1.5rem;
-}
-
 .project-taxonomy-item {
-    margin: 0 0 0.75rem;
+    margin: 0 0 .75rem;
 }
 
-.project-taxonomy-item dt {
+.project-taxonomy-label {
+    display: block;
     font-weight: 600;
-    margin: 0;
+    margin-bottom: .15rem;
 }
 
-.project-taxonomy-item dd {
-    margin: 0.15rem 0 0;
+.project-taxonomy-values {
+    display: block;
 }
 
-.project-taxonomy-item a {
+.project-taxonomy-values a {
     text-decoration: none;
 }
 
-.project-taxonomy-item a:hover {
+.project-taxonomy-values a:hover {
     text-decoration: underline;
 }
 
