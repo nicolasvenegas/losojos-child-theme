@@ -17,8 +17,8 @@ function losojos_project_taxonomies_shortcode() {
 
         $taxonomies = [
             'tipo-de-proyecto' => 'Tipo de proyecto',
-            'disciplinas' => 'Disciplinas',
-            'project_topics' => 'Temas'
+            'disciplina' => 'Disciplinas',
+            'tema' => 'Temas'
         ];
 
 
@@ -39,8 +39,6 @@ function losojos_project_taxonomies_shortcode() {
                 <strong>
                     <?php echo esc_html($label); ?>:
                 </strong>
-
-
                 <div class="project-taxonomy-terms">
 
                     <?php foreach ($terms as $term) : ?>
