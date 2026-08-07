@@ -37,3 +37,30 @@ Text Domain: losojos
 .taxonomy-separator {
     opacity: .6;
 }
+
+.project-related-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.project-related-card img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.project-related-card h3 {
+    margin: .75rem 0 .25rem;
+}
+
+.project-related-card p {
+    margin: 0;
+    opacity: .7;
+}
+
+.project-related-card a {
+    text-decoration: none;
+    color: inherit;
+}
