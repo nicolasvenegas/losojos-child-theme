@@ -1,82 +1,55 @@
 <?php
 
-function losojos_project_taxonomies_shortcode()
-{
+function losojos_project_taxonomies_shortcode() {
 
     if (!is_singular('proyecto')) {
         return '';
     }
 
-    ob_start();
+    $taxonomies = [
+        'tipo-de-proyecto' => 'Tipo de proyecto',
+        'disciplina'        => 'Disciplinas',
+        'tema'              => 'Temas',
+    ];
 
+    ob_start();
     ?>
 
-    <div class="project-taxonomies">
+    <div class="project-meta">
 
+        <?php foreach ($taxonomies as $taxonomy => $label) :
 
-        <?php
+            $terms = get_the_terms(get_the_ID(), $taxonomy);
 
-        $taxonomies = [
-            'tipo-de-proyecto' => 'Tipo de proyecto',
-            'disciplina' => 'Disciplinas',
-            'tema' => 'Temas'
-        ];
+            if (empty($terms) || is_wp_error($terms)) {
+                continue;
+            }
 
+            $links = [];
 
-        foreach ($taxonomies as $taxonomy => $label):
-
-            $terms = get_the_terms(
-                get_the_ID(),
-                $taxonomy
-            );
-
-
-            if ($terms && !is_wp_error($terms)):
-
-                ?>
-
-                <div class="project-taxonomy-item">
-
-    <span class="project-taxonomy-label">
-        <?php echo esc_html($label); ?>
-    </span>
-
-    <span class="project-taxonomy-values">
-
-        <?php foreach ($terms as $index => $term) : ?>
-
-            <?php if ($index > 0) : ?>
-                <span class="taxonomy-separator"> · </span>
-            <?php endif; ?>
-
-            <a href="<?php echo esc_url(get_term_link($term)); ?>">
-                <?php echo esc_html($term->name); ?>
-            </a>
-
-        <?php endforeach; ?>
-
-    </span>
-
-</div>
-
-
-                <?php
-
-            endif;
-
-        endforeach;
+            foreach ($terms as $term) {
+                $links[] = sprintf(
+                    '<a href="%s">%s</a>',
+                    esc_url(get_term_link($term)),
+                    esc_html($term->name)
+                );
+            }
 
         ?>
 
+            <div class="project-meta-item">
+                <strong><?php echo esc_html($label); ?>:</strong>
+                <?php echo implode(' · ', $links); ?>
+            </div>
+
+        <?php endforeach; ?>
 
     </div>
 
     <?php
 
     return ob_get_clean();
-
 }
-
 
 add_shortcode(
     'project_taxonomies',
