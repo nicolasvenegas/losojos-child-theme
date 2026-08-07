@@ -11,6 +11,32 @@ Update URI: https://github.com/nicolasvenegas/losojos-child-theme
 Text Domain: losojos
 */
 
-/*
-Deploy test 06-08-2026
-*/
+
+.project-taxonomies {
+    margin-top: 1.5rem;
+}
+
+.project-taxonomy-item {
+    margin: 0 0 0.75rem;
+}
+
+.project-taxonomy-item dt {
+    font-weight: 600;
+    margin: 0;
+}
+
+.project-taxonomy-item dd {
+    margin: 0.15rem 0 0;
+}
+
+.project-taxonomy-item a {
+    text-decoration: none;
+}
+
+.project-taxonomy-item a:hover {
+    text-decoration: underline;
+}
+
+.taxonomy-separator {
+    opacity: .6;
+}

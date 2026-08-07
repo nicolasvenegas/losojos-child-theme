@@ -35,28 +35,29 @@ function losojos_project_taxonomies_shortcode()
 
                 ?>
 
-                <div class="project-taxonomy-item">
+                <dl class="project-taxonomy-item">
 
-                    <strong>
-                        <?php echo esc_html($label); ?>:
-                    </strong>
-                    <div class="project-taxonomy-terms">
+                    <dt>
+                        <?php echo esc_html($label); ?>
+                    </dt>
 
-                        <?php foreach ($terms as $index => $term) : ?>
+                    <dd>
 
-        <?php if ($index > 0) : ?>
-            <span class="taxonomy-separator"> · </span>
-        <?php endif; ?>
+                        <?php foreach ($terms as $index => $term): ?>
 
-        <a href="<?php echo esc_url(get_term_link($term)); ?>">
-            <?php echo esc_html($term->name); ?>
-        </a>
+                            <?php if ($index > 0): ?>
+                                <span class="taxonomy-separator"> · </span>
+                            <?php endif; ?>
 
-    <?php endforeach; ?>
+                            <a href="<?php echo esc_url(get_term_link($term)); ?>">
+                                <?php echo esc_html($term->name); ?>
+                            </a>
 
-                    </div>
+                        <?php endforeach; ?>
 
-                </div>
+                    </dd>
+
+                </dl>
 
 
                 <?php
