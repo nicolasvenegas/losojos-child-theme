@@ -26,9 +26,7 @@ function losojos_project_content_shortcode() {
 
         <section class="project-content-section">
 
-            <h2>
-                <?php echo esc_html($title); ?>
-            </h2>
+            <h2><?php echo esc_html($title); ?></h2>
 
             <div class="project-content-body">
                 <?php echo wp_kses_post($content); ?>
