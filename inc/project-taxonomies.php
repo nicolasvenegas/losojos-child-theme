@@ -1,6 +1,7 @@
 <?php
 
-function losojos_project_taxonomies_shortcode() {
+function losojos_project_taxonomies_shortcode()
+{
 
     if (!is_singular('proyecto')) {
         return '';
@@ -22,7 +23,7 @@ function losojos_project_taxonomies_shortcode() {
         ];
 
 
-        foreach ($taxonomies as $taxonomy => $label) :
+        foreach ($taxonomies as $taxonomy => $label):
 
             $terms = get_the_terms(
                 get_the_ID(),
@@ -30,31 +31,35 @@ function losojos_project_taxonomies_shortcode() {
             );
 
 
-            if ($terms && !is_wp_error($terms)) :
+            if ($terms && !is_wp_error($terms)):
 
-        ?>
+                ?>
 
-            <div class="project-taxonomy-item">
+                <div class="project-taxonomy-item">
 
-                <strong>
-                    <?php echo esc_html($label); ?>:
-                </strong>
-                <div class="project-taxonomy-terms">
+                    <strong>
+                        <?php echo esc_html($label); ?>:
+                    </strong>
+                    <div class="project-taxonomy-terms">
 
-                    <?php foreach ($terms as $term) : ?>
+                        <?php foreach ($terms as $index => $term) : ?>
 
-                        <a href="<?php echo esc_url(get_term_link($term)); ?>">
-                            <?php echo esc_html($term->name); ?>
-                        </a>
+        <?php if ($index > 0) : ?>
+            <span class="taxonomy-separator"> · </span>
+        <?php endif; ?>
 
-                    <?php endforeach; ?>
+        <a href="<?php echo esc_url(get_term_link($term)); ?>">
+            <?php echo esc_html($term->name); ?>
+        </a>
+
+    <?php endforeach; ?>
+
+                    </div>
 
                 </div>
 
-            </div>
 
-
-        <?php
+                <?php
 
             endif;
 
