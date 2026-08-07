@@ -84,7 +84,7 @@ get_header();
   }
 </style>
 
-<img id="los-ojos-logo" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/logo.svg" alt="Los Ojos Logo" />
+<img id="los-ojos-logo" src="<?php echo get_stylesheet_directory_uri(); ?>/assets/logo.svg" alt="Los Ojos" />
 <main id="primary" class="site-main los-ojos-hero">
 
     <div class="screen-reader-text">
