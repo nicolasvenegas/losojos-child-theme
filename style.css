@@ -64,3 +64,55 @@ Text Domain: losojos
     text-decoration: none;
     color: inherit;
 }
+
+
+/* =========================================
+   PROJECT INDEX
+   ========================================= */
+
+.projects-index {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 3rem 2rem;
+}
+
+.project-index-card {
+    margin: 0;
+    padding: 0;
+}
+
+.project-index-card-link {
+    display: block;
+    text-decoration: none;
+}
+
+.project-index-image {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+}
+
+.project-index-content {
+    padding-top: 1rem;
+}
+
+.project-index-title {
+    margin: 0;
+}
+
+.project-index-year,
+.project-index-type,
+.project-index-disciplines {
+    margin-top: 0.35rem;
+}
+
+@media (max-width: 700px) {
+
+    .projects-index {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+    }
+
+}
