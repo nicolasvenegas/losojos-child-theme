@@ -115,4 +115,8 @@ Text Domain: losojos
         gap: 2.5rem;
     }
 
-}
+
+
+.projects-index {
+    border: 5px solid red !important;
+}}
