@@ -6,3 +6,22 @@ require_once get_stylesheet_directory() . '/inc/project-links.php';
 require_once get_stylesheet_directory() . '/inc/project-related.php';
 require_once get_stylesheet_directory() . '/inc/project-content.php';
 require_once get_stylesheet_directory() . '/inc/project-index.php';
+
+
+function losojos_enqueue_child_styles() {
+
+    wp_enqueue_style(
+        'losojos-child-style',
+        get_stylesheet_directory_uri() . '/style.css',
+        [],
+        filemtime(
+            get_stylesheet_directory() . '/style.css'
+        )
+    );
+
+}
+
+add_action(
+    'wp_enqueue_scripts',
+    'losojos_enqueue_child_styles'
+);
