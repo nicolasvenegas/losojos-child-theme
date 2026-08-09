@@ -8,6 +8,11 @@ require_once get_stylesheet_directory() . '/inc/project-content.php';
 require_once get_stylesheet_directory() . '/inc/project-index.php';
 
 
+add_action('wp_footer', function () {
+    echo '<!-- LOSOJOS CHILD FUNCTIONS OK -->';
+});
+
+
 function losojos_enqueue_child_styles() {
 
     wp_enqueue_style(
