@@ -114,9 +114,4 @@ Text Domain: losojos
         grid-template-columns: 1fr;
         gap: 2.5rem;
     }
-
-
-
-body {
-    outline: 10px solid red !important;
 }
