@@ -30,3 +30,12 @@ add_action(
     'wp_enqueue_scripts',
     'losojos_enqueue_child_styles'
 );
+
+/**
+ * Enable SVG uploads.
+ */
+function losojos_enable_svg_uploads( $mimes ) {
+    $mimes['svg'] = 'image/svg+xml';
+    return $mimes;
+}
+add_filter( 'upload_mimes', 'losojos_enable_svg_uploads' );
