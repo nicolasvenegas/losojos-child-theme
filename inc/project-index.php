@@ -44,8 +44,8 @@ function losojos_project_index_shortcode()
 
         $tax_query[] = [
             'taxonomy' => 'disciplina',
-            'field'    => 'slug',
-            'terms'    => $selected_discipline,
+            'field' => 'slug',
+            'terms' => $selected_discipline,
         ];
 
     }
@@ -55,8 +55,8 @@ function losojos_project_index_shortcode()
 
         $tax_query[] = [
             'taxonomy' => 'tipo-de-proyecto',
-            'field'    => 'slug',
-            'terms'    => $selected_type,
+            'field' => 'slug',
+            'terms' => $selected_type,
         ];
 
     }
@@ -66,19 +66,19 @@ function losojos_project_index_shortcode()
 
         $tax_query[] = [
             'taxonomy' => 'tema',
-            'field'    => 'slug',
-            'terms'    => $selected_topic,
+            'field' => 'slug',
+            'terms' => $selected_topic,
         ];
 
     }
 
 
     $projects = new WP_Query([
-        'post_type'      => 'proyecto',
+        'post_type' => 'proyecto',
         'posts_per_page' => -1,
-        'orderby'        => 'date',
-        'order'          => 'DESC',
-        'tax_query'      => count($tax_query) > 1
+        'orderby' => 'date',
+        'order' => 'DESC',
+        'tax_query' => count($tax_query) > 1
             ? $tax_query
             : [],
     ]);
@@ -92,11 +92,7 @@ function losojos_project_index_shortcode()
 
     ?>
 
-    <form
-        class="project-filters"
-        method="get"
-        action="<?php echo esc_url(get_permalink()); ?>"
-    >
+    <form class="project-filters" method="get" action="<?php echo esc_url(get_permalink()); ?>">
 
         <div class="project-filter">
 
@@ -104,11 +100,7 @@ function losojos_project_index_shortcode()
                 Disciplina
             </label>
 
-            <select
-                id="filter-disciplina"
-                name="disciplina"
-                onchange="this.form.submit()"
-            >
+            <select id="filter-disciplina" name="disciplina" onchange="this.form.submit()">
 
                 <option value="">
                     Todas
@@ -117,26 +109,23 @@ function losojos_project_index_shortcode()
                 <?php
 
                 $disciplines = get_terms([
-                    'taxonomy'   => 'disciplina',
+                    'taxonomy' => 'disciplina',
                     'hide_empty' => true,
                 ]);
 
-                if (!is_wp_error($disciplines)) :
+                if (!is_wp_error($disciplines)):
 
-                    foreach ($disciplines as $discipline) :
-                ?>
+                    foreach ($disciplines as $discipline):
+                        ?>
 
-                    <option
-                        value="<?php echo esc_attr($discipline->slug); ?>"
-                        <?php selected(
-                            $selected_discipline,
-                            $discipline->slug
-                        ); ?>
-                    >
-                        <?php echo esc_html($discipline->name); ?>
-                    </option>
+                        <option value="<?php echo esc_attr($discipline->slug); ?>" <?php selected(
+                               $selected_discipline,
+                               $discipline->slug
+                           ); ?>>
+                            <?php echo esc_html($discipline->name); ?>
+                        </option>
 
-                <?php
+                        <?php
                     endforeach;
 
                 endif;
@@ -153,11 +142,7 @@ function losojos_project_index_shortcode()
                 Tipo de proyecto
             </label>
 
-            <select
-                id="filter-tipo"
-                name="tipo-de-proyecto"
-                onchange="this.form.submit()"
-            >
+            <select id="filter-tipo" name="tipo-de-proyecto" onchange="this.form.submit()">
 
                 <option value="">
                     Todos
@@ -166,26 +151,23 @@ function losojos_project_index_shortcode()
                 <?php
 
                 $types = get_terms([
-                    'taxonomy'   => 'tipo-de-proyecto',
+                    'taxonomy' => 'tipo-de-proyecto',
                     'hide_empty' => true,
                 ]);
 
-                if (!is_wp_error($types)) :
+                if (!is_wp_error($types)):
 
-                    foreach ($types as $type) :
-                ?>
+                    foreach ($types as $type):
+                        ?>
 
-                    <option
-                        value="<?php echo esc_attr($type->slug); ?>"
-                        <?php selected(
-                            $selected_type,
-                            $type->slug
-                        ); ?>
-                    >
-                        <?php echo esc_html($type->name); ?>
-                    </option>
+                        <option value="<?php echo esc_attr($type->slug); ?>" <?php selected(
+                               $selected_type,
+                               $type->slug
+                           ); ?>>
+                            <?php echo esc_html($type->name); ?>
+                        </option>
 
-                <?php
+                        <?php
                     endforeach;
 
                 endif;
@@ -202,11 +184,7 @@ function losojos_project_index_shortcode()
                 Tema
             </label>
 
-            <select
-                id="filter-tema"
-                name="tema"
-                onchange="this.form.submit()"
-            >
+            <select id="filter-tema" name="tema" onchange="this.form.submit()">
 
                 <option value="">
                     Todos
@@ -215,26 +193,23 @@ function losojos_project_index_shortcode()
                 <?php
 
                 $topics = get_terms([
-                    'taxonomy'   => 'tema',
+                    'taxonomy' => 'tema',
                     'hide_empty' => true,
                 ]);
 
-                if (!is_wp_error($topics)) :
+                if (!is_wp_error($topics)):
 
-                    foreach ($topics as $topic) :
-                ?>
+                    foreach ($topics as $topic):
+                        ?>
 
-                    <option
-                        value="<?php echo esc_attr($topic->slug); ?>"
-                        <?php selected(
-                            $selected_topic,
-                            $topic->slug
-                        ); ?>
-                    >
-                        <?php echo esc_html($topic->name); ?>
-                    </option>
+                        <option value="<?php echo esc_attr($topic->slug); ?>" <?php selected(
+                               $selected_topic,
+                               $topic->slug
+                           ); ?>>
+                            <?php echo esc_html($topic->name); ?>
+                        </option>
 
-                <?php
+                        <?php
                     endforeach;
 
                 endif;
@@ -249,12 +224,9 @@ function losojos_project_index_shortcode()
             $selected_discipline ||
             $selected_type ||
             $selected_topic
-        ) : ?>
+        ): ?>
 
-            <a
-                class="project-filters-reset"
-                href="<?php echo esc_url(get_permalink()); ?>"
-            >
+            <a class="project-filters-reset" href="<?php echo esc_url(get_permalink()); ?>">
                 Limpiar filtros
             </a>
 
@@ -276,16 +248,20 @@ function losojos_project_index_shortcode()
 
     <div class="projects-index">
 
-        <?php if ($projects->have_posts()) : ?>
+        <?php if ($projects->have_posts()): ?>
 
-            <?php while ($projects->have_posts()) : $projects->the_post(); ?>
+            <?php while ($projects->have_posts()):
+                $projects->the_post(); ?>
 
                 <article class="project-index-card">
 
-                    <a
-                        class="project-index-card-link"
-                        href="<?php the_permalink(); ?>"
-                    >
+                    <?php
+                    /*
+                     * ENLACE AL PROYECTO
+                     */
+                    ?>
+
+                    <a class="project-index-card-link" href="<?php the_permalink(); ?>">
 
                         <?php
                         if (has_post_thumbnail()) {
@@ -305,110 +281,26 @@ function losojos_project_index_shortcode()
                                 <?php the_title(); ?>
                             </h2>
 
-
                             <?php
                             $start_year = get_field('project_start_year');
-                            $end_year   = get_field('project_end_year');
+                            $end_year = get_field('project_end_year');
                             ?>
 
-
-                            <?php if ($start_year || $end_year) : ?>
+                            <?php if ($start_year || $end_year): ?>
 
                                 <div class="project-index-year">
 
-                                    <?php if ($start_year) : ?>
-
+                                    <?php if ($start_year): ?>
                                         <?php echo esc_html($start_year); ?>
-
                                     <?php endif; ?>
 
-
-                                    <?php if ($start_year && $end_year) : ?>
-
+                                    <?php if ($start_year && $end_year): ?>
                                         –
-
                                     <?php endif; ?>
 
-
-                                    <?php if ($end_year) : ?>
-
+                                    <?php if ($end_year): ?>
                                         <?php echo esc_html($end_year); ?>
-
                                     <?php endif; ?>
-
-                                </div>
-
-                            <?php endif; ?>
-
-
-                            <?php
-                            $project_types = get_the_terms(
-                                get_the_ID(),
-                                'tipo-de-proyecto'
-                            );
-                            ?>
-
-
-                            <?php if (
-                                $project_types &&
-                                !is_wp_error($project_types)
-                            ) : ?>
-
-                                <div class="project-index-type">
-
-                                    <?php foreach (
-                                        $project_types
-                                        as $index => $term
-                                    ) : ?>
-
-                                        <?php if ($index > 0) : ?>
-
-                                            <span> · </span>
-
-                                        <?php endif; ?>
-
-                                        <span>
-                                            <?php echo esc_html($term->name); ?>
-                                        </span>
-
-                                    <?php endforeach; ?>
-
-                                </div>
-
-                            <?php endif; ?>
-
-
-                            <?php
-                            $project_disciplines = get_the_terms(
-                                get_the_ID(),
-                                'disciplina'
-                            );
-                            ?>
-
-
-                            <?php if (
-                                $project_disciplines &&
-                                !is_wp_error($project_disciplines)
-                            ) : ?>
-
-                                <div class="project-index-disciplines">
-
-                                    <?php foreach (
-                                        $project_disciplines
-                                        as $index => $term
-                                    ) : ?>
-
-                                        <?php if ($index > 0) : ?>
-
-                                            <span> · </span>
-
-                                        <?php endif; ?>
-
-                                        <span>
-                                            <?php echo esc_html($term->name); ?>
-                                        </span>
-
-                                    <?php endforeach; ?>
 
                                 </div>
 
@@ -418,11 +310,107 @@ function losojos_project_index_shortcode()
 
                     </a>
 
+
+                    <?php
+                    /*
+                     * TIPO DE PROYECTO
+                     */
+                    ?>
+
+                    <?php
+                    $project_types = get_the_terms(
+                        get_the_ID(),
+                        'tipo-de-proyecto'
+                    );
+                    ?>
+
+                    <?php if (
+                        $project_types &&
+                        !is_wp_error($project_types)
+                    ): ?>
+
+                        <div class="project-index-type">
+
+                            <?php foreach (
+                                $project_types
+                                as $index => $term
+                            ): ?>
+
+                                <?php if ($index > 0): ?>
+                                    <span> · </span>
+                                <?php endif; ?>
+
+                                <?php
+                                $filter_url = add_query_arg(
+                                    'tipo-de-proyecto',
+                                    $term->slug,
+                                    get_permalink()
+                                );
+                                ?>
+
+                                <a href="<?php echo esc_url($filter_url); ?>">
+                                    <?php echo esc_html($term->name); ?>
+                                </a>
+
+                            <?php endforeach; ?>
+
+                        </div>
+
+                    <?php endif; ?>
+
+
+                    <?php
+                    /*
+                     * DISCIPLINAS
+                     */
+                    ?>
+
+                    <?php
+                    $project_disciplines = get_the_terms(
+                        get_the_ID(),
+                        'disciplina'
+                    );
+                    ?>
+
+                    <?php if (
+                        $project_disciplines &&
+                        !is_wp_error($project_disciplines)
+                    ): ?>
+
+                        <div class="project-index-disciplines">
+
+                            <?php foreach (
+                                $project_disciplines
+                                as $index => $term
+                            ): ?>
+
+                                <?php if ($index > 0): ?>
+                                    <span> · </span>
+                                <?php endif; ?>
+
+                                <?php
+                                $filter_url = add_query_arg(
+                                    'disciplina',
+                                    $term->slug,
+                                    get_permalink()
+                                );
+                                ?>
+
+                                <a href="<?php echo esc_url($filter_url); ?>">
+                                    <?php echo esc_html($term->name); ?>
+                                </a>
+
+                            <?php endforeach; ?>
+
+                        </div>
+
+                    <?php endif; ?>
+
                 </article>
 
             <?php endwhile; ?>
 
-        <?php else : ?>
+        <?php else: ?>
 
             <p class="project-index-empty">
                 No se encontraron proyectos con estos filtros.
@@ -432,12 +420,12 @@ function losojos_project_index_shortcode()
 
     </div>
 
-
     <?php
 
     wp_reset_postdata();
 
     return ob_get_clean();
+
 
 }
 
