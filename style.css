@@ -114,6 +114,9 @@ Text Domain: losojos
     margin-top: 0.35rem;
     font-size: 13px;
 }
+.wp-block-list{
+    padding-left: 0;
+}
 
 .current-menu-item span{
     color: #00ffab;
