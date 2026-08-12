@@ -143,6 +143,10 @@ Text Domain: losojos
     text-decoration: none;
 }
 
+.custom-logo{
+    width: 180px;
+}
+
 
 /* =========================================
    PROJECT FILTERS
