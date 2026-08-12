@@ -11,126 +11,128 @@ Update URI: https://github.com/nicolasvenegas/losojos-child-theme
 Text Domain: losojos
 */
 
-
 .project-taxonomy-item {
-    margin: 0 0 .75rem;
+  margin: 0 0 0.75rem;
 }
 
 .project-taxonomy-label {
-    display: block;
-    font-weight: 600;
-    margin-bottom: .15rem;
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.15rem;
 }
 
 .project-taxonomy-values {
-    display: block;
+  display: block;
 }
 
 .project-taxonomy-values a {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 .project-taxonomy-values a:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 .taxonomy-separator {
-    opacity: .6;
+  opacity: 0.6;
 }
 
 .project-related-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 2rem;
-    margin-top: 2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
 }
 
 .project-related-card img {
-    width: 100%;
-    height: auto;
-    display: block;
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
 .project-related-card h3 {
-    margin: .75rem 0 .25rem;
+  margin: 0.75rem 0 0.25rem;
 }
 
 .project-related-card p {
-    margin: 0;
-    opacity: .7;
+  margin: 0;
+  opacity: 0.7;
 }
 
 .project-related-card a {
-    text-decoration: none;
-    color: inherit;
+  text-decoration: none;
+  color: inherit;
 }
-
 
 /* =========================================
    PROJECT INDEX
    ========================================= */
 
 .projects-index {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 3rem 2rem;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 3rem 2rem;
 }
 
 .project-index-card {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
 .project-index-card-link {
-    display: block;
-    text-decoration: none;
+  display: block;
+  text-decoration: none;
 }
 
 .project-index-image {
-    display: block;
-    width: 100%;
-    height: auto;
-    aspect-ratio: 4 / 3;
-    object-fit: cover;
-    border-radius: 10px;
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 10px;
 }
 
 .project-index-content {
-    padding-top: 1rem;
+  padding-top: 1rem;
 }
 
 .project-index-title {
   margin: 0;
   font-size: 18px;
-  color: #B09EFF;
+  color: #b09eff;
 }
-.project-index-year{
-    margin-bottom: 1rem;
-    color: #B09EFF;
+.project-index-year {
+  margin-bottom: 1rem;
+  color: #b09eff;
 }
 .project-index-year,
 .project-index-type,
 .project-index-disciplines {
-    margin-top: 0.35rem;
-    font-size: 13px;
+  margin-top: 0.35rem;
+  font-size: 13px;
 }
 
 .project-index-type a,
 .project-index-disciplines a {
-color: #B09EFF;
+  color: #b09eff;
 }
-.wp-block-list{
-    padding-left: 14px;
+.project-index-type a:hover, .project-index-type a:focus,
+.project-index-disciplines a:hover, .project-index-disciplines a:focus {
+  color: #fff;
+  text-decoration: none;
+}
+.wp-block-list {
+  padding-left: 14px;
 }
 
-.current-menu-item span{
-    color: #00ffab;
+.current-menu-item span {
+  color: #00ffab;
 }
 
 @media (max-width: 700px) {
-
-    .projects-index {
-        grid-template-columns: 1fr;
-        gap: 2.5rem;
-    }
+  .projects-index {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
 }
