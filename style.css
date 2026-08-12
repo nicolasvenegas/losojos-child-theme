@@ -154,7 +154,9 @@ Text Domain: losojos
 .project-meta-item  strong{
     color: #b09eff;
 }
-
+.project-content-section h2{
+    font-size: 1.6rem;
+}
 
 
 /* =========================================
