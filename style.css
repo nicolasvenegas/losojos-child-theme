@@ -75,6 +75,11 @@ Text Domain: losojos
     color: inherit;
 }
 
+.project-related h2{
+    font-size: 1.6rem;
+  color: #b09eff;
+}
+
 
 /* =========================================
    PROJECT INDEX
