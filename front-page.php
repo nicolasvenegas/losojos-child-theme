@@ -295,7 +295,7 @@ get_header();
 
 <img
   id="los-ojos-logo"
-  src="<?php echo get_stylesheet_directory_uri(); ?>/assets/logo.svg"
+  src="<?php echo get_stylesheet_directory_uri(); ?>/assets/losojos_logo.svg"
   alt="Los Ojos"
   role="button"
   tabindex="0"
