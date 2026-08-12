@@ -119,6 +119,9 @@ Text Domain: losojos
     margin-bottom: 1rem;
     color: #b09eff;
 }
+.project-index-type{
+    text-transform: uppercase;
+}
 
 .project-index-year,
 .project-index-type,
