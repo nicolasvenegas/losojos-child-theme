@@ -31,26 +31,41 @@ function losojos_project_related_shortcode() {
 
                 <article class="project-related-card">
 
-                    <a href="<?php echo esc_url($link); ?>">
+                    <?php if (has_post_thumbnail($project)) : ?>
 
-                        <?php
-                        if (has_post_thumbnail($project)) {
+                        <a
+                            class="project-related-card-link"
+                            href="<?php echo esc_url($link); ?>"
+                        >
+                            <?php
                             echo get_the_post_thumbnail(
                                 $project,
                                 'medium'
                             );
-                        }
-                        ?>
+                            ?>
+                        </a>
 
-                        <h3><?php echo esc_html($title); ?></h3>
+                    <?php endif; ?>
 
-                        <?php if ($year) : ?>
 
-                            <p><?php echo esc_html($year); ?></p>
+                    <h3>
+                        <a
+                            class="project-related-card-title"
+                            href="<?php echo esc_url($link); ?>"
+                        >
+                            <?php echo esc_html($title); ?>
+                        </a>
+                    </h3>
 
-                        <?php endif; ?>
 
-                    </a>
+                    <?php if ($year) : ?>
+
+                        <p>
+                            <?php echo esc_html($year); ?>
+                        </p>
+
+                    <?php endif; ?>
+
 
                 </article>
 
@@ -63,7 +78,6 @@ function losojos_project_related_shortcode() {
     <?php
 
     return ob_get_clean();
-
 }
 
 add_shortcode(
