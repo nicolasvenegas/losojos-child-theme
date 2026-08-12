@@ -12,7 +12,9 @@ Update URI: https://github.com/nicolasvenegas/losojos-child-theme
 Text Domain: losojos
 */
 
-
+a:hover, a:focus{
+    text-decoration: none !important;
+}
 /* =========================================
    PROJECT TAXONOMY
 ========================================= */
