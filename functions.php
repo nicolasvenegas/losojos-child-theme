@@ -1,16 +1,20 @@
 <?php
 
+
 require_once get_stylesheet_directory() . '/inc/acf-project-meta.php';
 require_once get_stylesheet_directory() . '/inc/project-taxonomies.php';
 require_once get_stylesheet_directory() . '/inc/project-links.php';
 require_once get_stylesheet_directory() . '/inc/project-related.php';
 require_once get_stylesheet_directory() . '/inc/project-content.php';
 require_once get_stylesheet_directory() . '/inc/project-index.php';
+require_once get_stylesheet_directory() . '/inc/project-taxonomy.php';
+
 
 
 add_action('wp_footer', function () {
     echo '<!-- LOSOJOS CHILD FUNCTIONS OK -->';
 });
+
 
 
 function losojos_enqueue_child_styles() {
@@ -31,11 +35,19 @@ add_action(
     'losojos_enqueue_child_styles'
 );
 
+
+
 /**
  * Enable SVG uploads.
  */
-function losojos_enable_svg_uploads( $mimes ) {
+function losojos_enable_svg_uploads($mimes) {
+
     $mimes['svg'] = 'image/svg+xml';
+
     return $mimes;
 }
-add_filter( 'upload_mimes', 'losojos_enable_svg_uploads' );
+
+add_filter(
+    'upload_mimes',
+    'losojos_enable_svg_uploads'
+);
