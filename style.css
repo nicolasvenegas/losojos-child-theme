@@ -108,7 +108,7 @@ Text Domain: losojos
     margin-top: 0.35rem;
 }
 
-.current-menu-item a{
+.current-menu-item span{
     color: #00ffab;
 }
 
