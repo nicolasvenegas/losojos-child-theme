@@ -1,45 +1,22 @@
 <?php
 
 
-function losojos_project_index_shortcode()
-{
+/*
+ * ==================================================
+ * RENDER DEL LISTADO DE PROYECTOS
+ * ==================================================
+ */
 
-
-    if (!is_page('laboratorio')) {
-        return '';
-    }
-
-
-    ob_start();
-
-
-
-    /*
-     * --------------------------------------------------
-     * FILTROS
-     * --------------------------------------------------
-     */
-
-
-    $selected_discipline = isset($_GET['disciplina'])
-        ? sanitize_text_field(wp_unslash($_GET['disciplina']))
-        : '';
-
-
-    $selected_type = isset($_GET['tipo-de-proyecto'])
-        ? sanitize_text_field(wp_unslash($_GET['tipo-de-proyecto']))
-        : '';
-
-
-    $selected_topic = isset($_GET['tema'])
-        ? sanitize_text_field(wp_unslash($_GET['tema']))
-        : '';
-
+function losojos_render_projects_index(
+    $selected_discipline = '',
+    $selected_type = '',
+    $selected_topic = ''
+) {
 
 
     /*
      * --------------------------------------------------
-     * CONSULTA DE PROYECTOS
+     * CONSULTA
      * --------------------------------------------------
      */
 
@@ -49,9 +26,7 @@ function losojos_project_index_shortcode()
     ];
 
 
-
     if ($selected_discipline) {
-
 
         $tax_query[] = [
             'taxonomy' => 'disciplina',
@@ -59,13 +34,10 @@ function losojos_project_index_shortcode()
             'terms'    => $selected_discipline,
         ];
 
-
     }
 
 
-
     if ($selected_type) {
-
 
         $tax_query[] = [
             'taxonomy' => 'tipo-de-proyecto',
@@ -73,13 +45,10 @@ function losojos_project_index_shortcode()
             'terms'    => $selected_type,
         ];
 
-
     }
 
 
-
     if ($selected_topic) {
-
 
         $tax_query[] = [
             'taxonomy' => 'tema',
@@ -87,9 +56,7 @@ function losojos_project_index_shortcode()
             'terms'    => $selected_topic,
         ];
 
-
     }
-
 
 
     $projects = new WP_Query([
@@ -101,7 +68,6 @@ function losojos_project_index_shortcode()
             ? $tax_query
             : [],
     ]);
-
 
 
     /*
@@ -118,259 +84,7 @@ function losojos_project_index_shortcode()
         : home_url('/');
 
 
-
-    /*
-     * --------------------------------------------------
-     * FILTROS VISUALES
-     * --------------------------------------------------
-     */
-
-
-    ?>
-
-
-    <form
-        class="project-filters"
-        method="get"
-        action="<?php echo esc_url($laboratorio_url); ?>"
-    >
-
-
-        <div class="project-filter">
-
-
-            <label for="filter-disciplina">
-                Disciplina
-            </label>
-
-
-            <select
-                id="filter-disciplina"
-                name="disciplina"
-                onchange="this.form.submit()"
-            >
-
-
-                <option value="">
-                    Todas
-                </option>
-
-
-                <?php
-
-
-                $disciplines = get_terms([
-                    'taxonomy'   => 'disciplina',
-                    'hide_empty' => true,
-                ]);
-
-
-                if (!is_wp_error($disciplines)):
-
-
-                    foreach ($disciplines as $discipline):
-
-
-                        ?>
-
-
-                        <option
-                            value="<?php echo esc_attr($discipline->slug); ?>"
-                            <?php selected(
-                                $selected_discipline,
-                                $discipline->slug
-                            ); ?>
-                        >
-                            <?php echo esc_html($discipline->name); ?>
-                        </option>
-
-
-                        <?php
-
-
-                    endforeach;
-
-
-                endif;
-
-
-                ?>
-
-
-            </select>
-
-
-        </div>
-
-
-
-        <div class="project-filter">
-
-
-            <label for="filter-tipo">
-                Tipo de proyecto
-            </label>
-
-
-            <select
-                id="filter-tipo"
-                name="tipo-de-proyecto"
-                onchange="this.form.submit()"
-            >
-
-
-                <option value="">
-                    Todos
-                </option>
-
-
-                <?php
-
-
-                $types = get_terms([
-                    'taxonomy'   => 'tipo-de-proyecto',
-                    'hide_empty' => true,
-                ]);
-
-
-                if (!is_wp_error($types)):
-
-
-                    foreach ($types as $type):
-
-
-                        ?>
-
-
-                        <option
-                            value="<?php echo esc_attr($type->slug); ?>"
-                            <?php selected(
-                                $selected_type,
-                                $type->slug
-                            ); ?>
-                        >
-                            <?php echo esc_html($type->name); ?>
-                        </option>
-
-
-                        <?php
-
-
-                    endforeach;
-
-
-                endif;
-
-
-                ?>
-
-
-            </select>
-
-
-        </div>
-
-
-
-        <div class="project-filter">
-
-
-            <label for="filter-tema">
-                Tema
-            </label>
-
-
-            <select
-                id="filter-tema"
-                name="tema"
-                onchange="this.form.submit()"
-            >
-
-
-                <option value="">
-                    Todos
-                </option>
-
-
-                <?php
-
-
-                $topics = get_terms([
-                    'taxonomy'   => 'tema',
-                    'hide_empty' => true,
-                ]);
-
-
-                if (!is_wp_error($topics)):
-
-
-                    foreach ($topics as $topic):
-
-
-                        ?>
-
-
-                        <option
-                            value="<?php echo esc_attr($topic->slug); ?>"
-                            <?php selected(
-                                $selected_topic,
-                                $topic->slug
-                            ); ?>
-                        >
-                            <?php echo esc_html($topic->name); ?>
-                        </option>
-
-
-                        <?php
-
-
-                    endforeach;
-
-
-                endif;
-
-
-                ?>
-
-
-            </select>
-
-
-        </div>
-
-
-
-        <?php if (
-            $selected_discipline ||
-            $selected_type ||
-            $selected_topic
-        ): ?>
-
-
-            <a
-                class="project-filters-reset"
-                href="<?php echo esc_url($laboratorio_url); ?>"
-            >
-                Limpiar filtros
-            </a>
-
-
-        <?php endif; ?>
-
-
-    </form>
-
-
-
-    <?php
-
-
-
-    /*
-     * --------------------------------------------------
-     * LISTADO DE PROYECTOS
-     * --------------------------------------------------
-     */
+    ob_start();
 
 
     ?>
@@ -535,7 +249,12 @@ function losojos_project_index_shortcode()
                                 ?>
 
 
-                                <a href="<?php echo esc_url($filter_url); ?>">
+                                <a
+                                    href="<?php echo esc_url($filter_url); ?>"
+                                    class="project-filter-link"
+                                    data-filter="tipo-de-proyecto"
+                                    data-value="<?php echo esc_attr($term->slug); ?>"
+                                >
 
                                     <?php echo esc_html($term->name); ?>
 
@@ -602,7 +321,12 @@ function losojos_project_index_shortcode()
                                 ?>
 
 
-                                <a href="<?php echo esc_url($filter_url); ?>">
+                                <a
+                                    href="<?php echo esc_url($filter_url); ?>"
+                                    class="project-filter-link"
+                                    data-filter="disciplina"
+                                    data-value="<?php echo esc_attr($term->slug); ?>"
+                                >
 
                                     <?php echo esc_html($term->name); ?>
 
@@ -640,7 +364,6 @@ function losojos_project_index_shortcode()
     </div>
 
 
-
     <?php
 
 
@@ -649,9 +372,615 @@ function losojos_project_index_shortcode()
 
     return ob_get_clean();
 
-
 }
 
+
+
+/*
+ * ==================================================
+ * SHORTCODE
+ * ==================================================
+ */
+
+function losojos_project_index_shortcode()
+{
+
+
+    if (!is_page('laboratorio')) {
+        return '';
+    }
+
+
+    ob_start();
+
+
+    /*
+     * --------------------------------------------------
+     * VALORES ACTUALES
+     * --------------------------------------------------
+     */
+
+
+    $selected_discipline = isset($_GET['disciplina'])
+        ? sanitize_text_field(wp_unslash($_GET['disciplina']))
+        : '';
+
+
+    $selected_type = isset($_GET['tipo-de-proyecto'])
+        ? sanitize_text_field(wp_unslash($_GET['tipo-de-proyecto']))
+        : '';
+
+
+    $selected_topic = isset($_GET['tema'])
+        ? sanitize_text_field(wp_unslash($_GET['tema']))
+        : '';
+
+
+
+    /*
+     * --------------------------------------------------
+     * URL DE LABORATORIO
+     * --------------------------------------------------
+     */
+
+
+    $laboratorio_page = get_page_by_path('laboratorio');
+
+    $laboratorio_url = $laboratorio_page
+        ? get_permalink($laboratorio_page)
+        : home_url('/');
+
+
+
+    /*
+     * --------------------------------------------------
+     * FILTROS
+     * --------------------------------------------------
+     */
+
+
+    ?>
+
+
+    <form
+        class="project-filters"
+        method="get"
+        action="<?php echo esc_url($laboratorio_url); ?>"
+    >
+
+
+        <div class="project-filter">
+
+
+            <label for="filter-disciplina">
+                Disciplina
+            </label>
+
+
+            <select
+                id="filter-disciplina"
+                name="disciplina"
+            >
+
+
+                <option value="">
+                    Todas
+                </option>
+
+
+                <?php
+
+                $disciplines = get_terms([
+                    'taxonomy'   => 'disciplina',
+                    'hide_empty' => true,
+                ]);
+
+
+                if (!is_wp_error($disciplines)):
+
+                    foreach ($disciplines as $discipline):
+
+                        ?>
+
+
+                        <option
+                            value="<?php echo esc_attr($discipline->slug); ?>"
+                            <?php selected(
+                                $selected_discipline,
+                                $discipline->slug
+                            ); ?>
+                        >
+
+                            <?php echo esc_html($discipline->name); ?>
+
+                        </option>
+
+
+                        <?php
+
+                    endforeach;
+
+                endif;
+
+                ?>
+
+
+            </select>
+
+
+        </div>
+
+
+
+        <div class="project-filter">
+
+
+            <label for="filter-tipo">
+                Tipo de proyecto
+            </label>
+
+
+            <select
+                id="filter-tipo"
+                name="tipo-de-proyecto"
+            >
+
+
+                <option value="">
+                    Todos
+                </option>
+
+
+                <?php
+
+                $types = get_terms([
+                    'taxonomy'   => 'tipo-de-proyecto',
+                    'hide_empty' => true,
+                ]);
+
+
+                if (!is_wp_error($types)):
+
+                    foreach ($types as $type):
+
+                        ?>
+
+
+                        <option
+                            value="<?php echo esc_attr($type->slug); ?>"
+                            <?php selected(
+                                $selected_type,
+                                $type->slug
+                            ); ?>
+                        >
+
+                            <?php echo esc_html($type->name); ?>
+
+                        </option>
+
+
+                        <?php
+
+                    endforeach;
+
+                endif;
+
+                ?>
+
+
+            </select>
+
+
+        </div>
+
+
+
+        <div class="project-filter">
+
+
+            <label for="filter-tema">
+                Tema
+            </label>
+
+
+            <select
+                id="filter-tema"
+                name="tema"
+            >
+
+
+                <option value="">
+                    Todos
+                </option>
+
+
+                <?php
+
+                $topics = get_terms([
+                    'taxonomy'   => 'tema',
+                    'hide_empty' => true,
+                ]);
+
+
+                if (!is_wp_error($topics)):
+
+                    foreach ($topics as $topic):
+
+                        ?>
+
+
+                        <option
+                            value="<?php echo esc_attr($topic->slug); ?>"
+                            <?php selected(
+                                $selected_topic,
+                                $topic->slug
+                            ); ?>
+                        >
+
+                            <?php echo esc_html($topic->name); ?>
+
+                        </option>
+
+
+                        <?php
+
+                    endforeach;
+
+                endif;
+
+                ?>
+
+
+            </select>
+
+
+        </div>
+
+
+
+        <?php if (
+            $selected_discipline ||
+            $selected_type ||
+            $selected_topic
+        ): ?>
+
+
+            <a
+                class="project-filters-reset"
+                href="<?php echo esc_url($laboratorio_url); ?>"
+            >
+
+                Limpiar filtros
+
+            </a>
+
+
+        <?php endif; ?>
+
+
+    </form>
+
+
+
+    <?php
+
+
+    /*
+     * --------------------------------------------------
+     * CONTENEDOR ACTUALIZABLE
+     * --------------------------------------------------
+     */
+
+
+    ?>
+
+
+    <div
+        id="projects-index-container"
+        aria-live="polite"
+    >
+
+        <?php
+
+        echo losojos_render_projects_index(
+            $selected_discipline,
+            $selected_type,
+            $selected_topic
+        );
+
+        ?>
+
+    </div>
+
+
+    <?php
+
+
+    /*
+     * --------------------------------------------------
+     * JAVASCRIPT
+     * --------------------------------------------------
+     */
+
+
+    ?>
+
+
+    <script>
+
+    document.addEventListener('DOMContentLoaded', function () {
+
+        const filters = document.querySelector('.project-filters');
+        const container = document.getElementById('projects-index-container');
+
+        if (!filters || !container) {
+            return;
+        }
+
+
+        /*
+         * ----------------------------------------------
+         * CONSTRUIR URL
+         * ----------------------------------------------
+         */
+
+        function buildUrl() {
+
+            const url = new URL(
+                filters.getAttribute('action'),
+                window.location.origin
+            );
+
+            const formData = new FormData(filters);
+
+            for (const [key, value] of formData.entries()) {
+
+                if (value) {
+                    url.searchParams.set(key, value);
+                }
+
+            }
+
+            return url;
+
+        }
+
+
+        /*
+         * ----------------------------------------------
+         * ACTUALIZAR FILTROS
+         * ----------------------------------------------
+         */
+
+        async function updateProjects(pushState = true) {
+
+            const url = buildUrl();
+
+            container.classList.add('is-loading');
+
+            try {
+
+                const response = await fetch(url.toString(), {
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Error al cargar los proyectos.');
+                }
+
+                const html = await response.text();
+
+                const parser = new DOMParser();
+
+                const doc = parser.parseFromString(
+                    html,
+                    'text/html'
+                );
+
+                const newContainer =
+                    doc.querySelector('#projects-index-container');
+
+                if (!newContainer) {
+                    throw new Error('No se encontró el índice de proyectos.');
+                }
+
+                container.innerHTML = newContainer.innerHTML;
+
+                if (pushState) {
+
+                    window.history.pushState(
+                        {},
+                        '',
+                        url.toString()
+                    );
+
+                }
+
+                updateSelects(url);
+
+            } catch (error) {
+
+                /*
+                 * Si algo falla, utilizamos la navegación
+                 * normal de WordPress.
+                 */
+
+                window.location.href = url.toString();
+
+            } finally {
+
+                container.classList.remove('is-loading');
+
+            }
+
+        }
+
+
+        /*
+         * ----------------------------------------------
+         * ACTUALIZAR SELECTS
+         * ----------------------------------------------
+         */
+
+        function updateSelects(url) {
+
+            const params = url.searchParams;
+
+            const discipline =
+                filters.querySelector('[name="disciplina"]');
+
+            const type =
+                filters.querySelector('[name="tipo-de-proyecto"]');
+
+            const topic =
+                filters.querySelector('[name="tema"]');
+
+
+            if (discipline) {
+
+                discipline.value =
+                    params.get('disciplina') || '';
+
+            }
+
+
+            if (type) {
+
+                type.value =
+                    params.get('tipo-de-proyecto') || '';
+
+            }
+
+
+            if (topic) {
+
+                topic.value =
+                    params.get('tema') || '';
+
+            }
+
+        }
+
+
+        /*
+         * ----------------------------------------------
+         * SELECTS
+         * ----------------------------------------------
+         */
+
+        filters.addEventListener('change', function (event) {
+
+            if (
+                event.target.matches('select')
+            ) {
+
+                updateProjects(true);
+
+            }
+
+        });
+
+
+        /*
+         * ----------------------------------------------
+         * ENLACES DE TAXONOMÍAS
+         * ----------------------------------------------
+         */
+
+        container.addEventListener('click', function (event) {
+
+            const link =
+                event.target.closest('.project-filter-link');
+
+            if (!link) {
+                return;
+            }
+
+            event.preventDefault();
+
+            const url = new URL(
+                link.href,
+                window.location.origin
+            );
+
+            /*
+             * Al seleccionar un filtro desde un proyecto,
+             * eliminamos los otros filtros.
+             */
+
+            filters.querySelector('[name="disciplina"]').value =
+                url.searchParams.get('disciplina') || '';
+
+            filters.querySelector('[name="tipo-de-proyecto"]').value =
+                url.searchParams.get('tipo-de-proyecto') || '';
+
+            filters.querySelector('[name="tema"]').value =
+                url.searchParams.get('tema') || '';
+
+            updateProjects(true);
+
+        });
+
+
+        /*
+         * ----------------------------------------------
+         * LIMPIAR FILTROS
+         * ----------------------------------------------
+         */
+
+        const resetLink =
+            filters.querySelector('.project-filters-reset');
+
+        if (resetLink) {
+
+            resetLink.addEventListener('click', function (event) {
+
+                event.preventDefault();
+
+                filters.querySelector('[name="disciplina"]').value = '';
+
+                filters.querySelector('[name="tipo-de-proyecto"]').value = '';
+
+                filters.querySelector('[name="tema"]').value = '';
+
+                updateProjects(true);
+
+            });
+
+        }
+
+
+        /*
+         * ----------------------------------------------
+         * ATRÁS / ADELANTE DEL NAVEGADOR
+         * ----------------------------------------------
+         */
+
+        window.addEventListener('popstate', function () {
+
+            const url = new URL(
+                window.location.href
+            );
+
+            updateSelects(url);
+
+            updateProjects(false);
+
+        });
+
+    });
+
+    </script>
+
+
+    <?php
+
+
+    return ob_get_clean();
+
+}
 
 
 add_shortcode(
