@@ -108,6 +108,10 @@ Text Domain: losojos
     margin-top: 0.35rem;
 }
 
+.current-menu-item a{
+    color: #00ffab;
+}
+
 @media (max-width: 700px) {
 
     .projects-index {
