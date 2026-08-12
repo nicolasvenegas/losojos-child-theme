@@ -77,7 +77,11 @@ Text Domain: losojos
 
 .project-related h2{
     font-size: 1.6rem;
-  color: #b09eff;
+  color: #6F52FF;
+}
+
+.project-related-card img{
+    border-radius: 10px;
 }
 
 
