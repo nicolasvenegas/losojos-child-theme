@@ -16,7 +16,6 @@ function losojos_project_related_shortcode() {
     ?>
 
     <section class="project-related">
-
         <h2>Proyectos relacionados</h2>
 
         <div class="project-related-grid">
@@ -32,47 +31,33 @@ function losojos_project_related_shortcode() {
                 <article class="project-related-card">
 
                     <?php if (has_post_thumbnail($project)) : ?>
-
                         <a
                             class="project-related-card-link"
                             href="<?php echo esc_url($link); ?>"
-                        >
-                            <?php
+                        ><?php
                             echo get_the_post_thumbnail(
                                 $project,
                                 'medium'
                             );
-                            ?>
-                        </a>
-
+                        ?></a>
                     <?php endif; ?>
-
 
                     <h3>
                         <a
                             class="project-related-card-title"
                             href="<?php echo esc_url($link); ?>"
-                        >
-                            <?php echo esc_html($title); ?>
-                        </a>
+                        ><?php echo esc_html($title); ?></a>
                     </h3>
 
-
                     <?php if ($year) : ?>
-
-                        <p>
-                            <?php echo esc_html($year); ?>
-                        </p>
-
+                        <p class="project-related-card-year"><?php echo esc_html($year); ?></p>
                     <?php endif; ?>
-
 
                 </article>
 
             <?php endforeach; ?>
 
         </div>
-
     </section>
 
     <?php
