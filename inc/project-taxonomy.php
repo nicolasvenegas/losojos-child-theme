@@ -3,12 +3,28 @@
 
 /*
  * ==================================================
- * RENDER DE PROYECTOS POR TAXONOMÍA
+ * PROYECTOS DE UNA TAXONOMÍA
  * ==================================================
  */
 
 
-function losojos_render_taxonomy_projects($term_id) {
+function losojos_projects_taxonomy_shortcode() {
+
+
+    if (!is_tax('tema')) {
+        return '';
+    }
+
+
+    $term = get_queried_object();
+
+
+    if (
+        !$term ||
+        empty($term->term_id)
+    ) {
+        return '';
+    }
 
 
     /*
@@ -36,7 +52,7 @@ function losojos_render_taxonomy_projects($term_id) {
 
                 'field'    => 'term_id',
 
-                'terms'    => $term_id,
+                'terms'    => $term->term_id,
 
             ],
 
@@ -47,7 +63,7 @@ function losojos_render_taxonomy_projects($term_id) {
 
     /*
      * --------------------------------------------------
-     * URL DE LABORATORIO
+     * URL LABORATORIO
      * --------------------------------------------------
      */
 
@@ -56,10 +72,15 @@ function losojos_render_taxonomy_projects($term_id) {
 
 
     $laboratorio_url = $laboratorio_page
-
         ? get_permalink($laboratorio_page)
-
         : home_url('/');
+
+
+    /*
+     * --------------------------------------------------
+     * HTML
+     * --------------------------------------------------
+     */
 
 
     ob_start();
@@ -67,15 +88,11 @@ function losojos_render_taxonomy_projects($term_id) {
 
     ?>
 
-
     <div class="projects-index">
 
+        <?php if ($projects->have_posts()) : ?>
 
-        <?php if ($projects->have_posts()): ?>
-
-
-            <?php while ($projects->have_posts()): $projects->the_post(); ?>
-
+            <?php while ($projects->have_posts()) : $projects->the_post(); ?>
 
                 <article class="project-index-card">
 
@@ -86,23 +103,16 @@ function losojos_render_taxonomy_projects($term_id) {
                      */
                     ?>
 
-
                     <?php
 
                     if (has_post_thumbnail()) {
 
                         echo get_the_post_thumbnail(
-
                             get_the_ID(),
-
                             'large',
-
                             [
-
                                 'class' => 'project-index-image'
-
                             ]
-
                         );
 
                     }
@@ -118,7 +128,6 @@ function losojos_render_taxonomy_projects($term_id) {
                          * TÍTULO
                          */
                         ?>
-
 
                         <h2 class="project-index-title">
 
@@ -137,7 +146,6 @@ function losojos_render_taxonomy_projects($term_id) {
                          */
                         ?>
 
-
                         <?php
 
                         $start_year = get_field(
@@ -151,13 +159,11 @@ function losojos_render_taxonomy_projects($term_id) {
                         ?>
 
 
-                        <?php if ($start_year || $end_year): ?>
-
+                        <?php if ($start_year || $end_year) : ?>
 
                             <div class="project-index-year">
 
-
-                                <?php if ($start_year): ?>
+                                <?php if ($start_year) : ?>
 
                                     <?php echo esc_html(
                                         $start_year
@@ -166,14 +172,14 @@ function losojos_render_taxonomy_projects($term_id) {
                                 <?php endif; ?>
 
 
-                                <?php if ($start_year && $end_year): ?>
+                                <?php if ($start_year && $end_year) : ?>
 
                                     –
 
                                 <?php endif; ?>
 
 
-                                <?php if ($end_year): ?>
+                                <?php if ($end_year) : ?>
 
                                     <?php echo esc_html(
                                         $end_year
@@ -181,9 +187,7 @@ function losojos_render_taxonomy_projects($term_id) {
 
                                 <?php endif; ?>
 
-
                             </div>
-
 
                         <?php endif; ?>
 
@@ -193,48 +197,34 @@ function losojos_render_taxonomy_projects($term_id) {
 
                     <?php
                     /*
-                     * TIPO DE PROYECTO
+                     * TIPO
                      */
                     ?>
-
 
                     <?php
 
                     $project_types = get_the_terms(
-
                         get_the_ID(),
-
                         'tipo-de-proyecto'
-
                     );
 
                     ?>
 
 
                     <?php if (
-
                         $project_types &&
-
                         !is_wp_error($project_types)
-
-                    ): ?>
-
+                    ) : ?>
 
                         <div class="project-index-type">
 
-
                             <?php foreach (
+                                $project_types as $index => $type
+                            ) : ?>
 
-                                $project_types
+                                <?php if ($index > 0) : ?>
 
-                                as $index => $term
-
-                            ): ?>
-
-
-                                <?php if ($index > 0): ?>
-
-                                    <span>
+                                    <span class="taxonomy-separator">
                                         ·
                                     </span>
 
@@ -244,36 +234,23 @@ function losojos_render_taxonomy_projects($term_id) {
                                 <?php
 
                                 $filter_url = add_query_arg(
-
                                     'tipo-de-proyecto',
-
-                                    $term->slug,
-
+                                    $type->slug,
                                     $laboratorio_url
-
                                 );
 
                                 ?>
 
 
                                 <a
-
-                                    href="<?php echo esc_url(
-                                        $filter_url
-                                    ); ?>"
-
+                                    href="<?php echo esc_url($filter_url); ?>"
                                     class="project-filter-link"
-
                                     data-filter="tipo-de-proyecto"
-
-                                    data-value="<?php echo esc_attr(
-                                        $term->slug
-                                    ); ?>"
-
+                                    data-value="<?php echo esc_attr($type->slug); ?>"
                                 >
 
                                     <?php echo esc_html(
-                                        $term->name
+                                        $type->name
                                     ); ?>
 
                                 </a>
@@ -281,9 +258,7 @@ function losojos_render_taxonomy_projects($term_id) {
 
                             <?php endforeach; ?>
 
-
                         </div>
-
 
                     <?php endif; ?>
 
@@ -294,44 +269,30 @@ function losojos_render_taxonomy_projects($term_id) {
                      */
                     ?>
 
-
                     <?php
 
                     $project_disciplines = get_the_terms(
-
                         get_the_ID(),
-
                         'disciplina'
-
                     );
 
                     ?>
 
 
                     <?php if (
-
                         $project_disciplines &&
-
                         !is_wp_error($project_disciplines)
-
-                    ): ?>
-
+                    ) : ?>
 
                         <div class="project-index-disciplines">
 
-
                             <?php foreach (
+                                $project_disciplines as $index => $discipline
+                            ) : ?>
 
-                                $project_disciplines
+                                <?php if ($index > 0) : ?>
 
-                                as $index => $discipline
-
-                            ): ?>
-
-
-                                <?php if ($index > 0): ?>
-
-                                    <span>
+                                    <span class="taxonomy-separator">
                                         ·
                                     </span>
 
@@ -341,32 +302,19 @@ function losojos_render_taxonomy_projects($term_id) {
                                 <?php
 
                                 $filter_url = add_query_arg(
-
                                     'disciplina',
-
                                     $discipline->slug,
-
                                     $laboratorio_url
-
                                 );
 
                                 ?>
 
 
                                 <a
-
-                                    href="<?php echo esc_url(
-                                        $filter_url
-                                    ); ?>"
-
+                                    href="<?php echo esc_url($filter_url); ?>"
                                     class="project-filter-link"
-
                                     data-filter="disciplina"
-
-                                    data-value="<?php echo esc_attr(
-                                        $discipline->slug
-                                    ); ?>"
-
+                                    data-value="<?php echo esc_attr($discipline->slug); ?>"
                                 >
 
                                     <?php echo esc_html(
@@ -378,34 +326,26 @@ function losojos_render_taxonomy_projects($term_id) {
 
                             <?php endforeach; ?>
 
-
                         </div>
-
 
                     <?php endif; ?>
 
 
                 </article>
 
-
             <?php endwhile; ?>
 
+        <?php else : ?>
 
-        <?php else: ?>
-
-
-            <p class="project-index-empty">
+            <div class="project-index-empty">
 
                 No se encontraron proyectos asociados a este tema.
 
-            </p>
-
+            </div>
 
         <?php endif; ?>
 
-
     </div>
-
 
     <?php
 
@@ -413,55 +353,21 @@ function losojos_render_taxonomy_projects($term_id) {
     wp_reset_postdata();
 
 
+    /*
+     * IMPORTANTE:
+     *
+     * No devolvemos el contenido a través de wpautop.
+     * El shortcode debe entregar directamente
+     * el fragmento HTML.
+     */
+
+
     return ob_get_clean();
 
 }
 
 
-/*
- * ==================================================
- * SHORTCODE
- * ==================================================
- */
-
-
-function losojos_projects_taxonomy_shortcode() {
-
-
-    if (!is_tax('tema')) {
-
-        return '';
-
-    }
-
-
-    $term = get_queried_object();
-
-
-    if (
-
-        !$term ||
-
-        empty($term->term_id)
-
-    ) {
-
-        return '';
-
-    }
-
-
-    return losojos_render_taxonomy_projects(
-        $term->term_id
-    );
-
-}
-
-
 add_shortcode(
-
     'projects_taxonomy',
-
     'losojos_projects_taxonomy_shortcode'
-
 );
