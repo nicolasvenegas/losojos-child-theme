@@ -147,6 +147,11 @@ Text Domain: losojos
     width: 180px;
 }
 
+.project-meta-item {
+    margin-bottom: 0.5rem;
+}
+
+
 
 /* =========================================
    PROJECT FILTERS
