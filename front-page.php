@@ -6,6 +6,7 @@
 get_header();
 ?>
 
+
 <style>
   body.home .entry-header,
   body.home .page-title,
@@ -32,21 +33,29 @@ get_header();
 
   #los-ojos-logo {
     position: fixed;
-    z-index: 2;
+    z-index: 20;
     top: 50%;
     left: 50%;
     transform: translate3d(-50%, -50%, 0);
     width: min(25vw, 300px);
     height: auto;
     max-height: 300px;
-    pointer-events: none;
+    pointer-events: auto;
+    cursor: pointer;
     user-select: none;
 
     image-rendering: -webkit-optimize-contrast;
     shape-rendering: geometricPrecision;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
-    transition: opacity 0.6s ease;
+
+    transition:
+      transform 0.6s ease,
+      opacity 0.6s ease;
+  }
+
+  #los-ojos-logo:focus {
+    outline: none;
   }
 
   .screen-reader-text {
@@ -78,11 +87,188 @@ get_header();
   body.home .site-header .header-navigation .menu-item a:hover {
     color: #fff;
   }
+
+
+  /* =========================================
+     NAVEGACIÓN INTERACTIVA
+     ========================================= */
+
+  #los-ojos-menu {
+    position: fixed;
+    inset: 0;
+    z-index: 15;
+    pointer-events: none;
+  }
+
+  .los-ojos-menu-item {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    line-height: 1;
+
+    opacity: 0;
+    transform:
+      translate(-50%, -50%)
+      scale(0.8);
+
+    pointer-events: none;
+
+    transition:
+      opacity 0.45s ease,
+      transform 0.65s cubic-bezier(.22, 1, .36, 1);
+  }
+
+  .los-ojos-menu-item:hover {
+    color: #b09eff;
+  }
+
+  body.los-ojos-menu-open #los-ojos-menu {
+    pointer-events: auto;
+  }
+
+  body.los-ojos-menu-open .los-ojos-menu-item {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /*
+   * Las posiciones forman una estructura alrededor
+   * del logo central.
+   */
+
+  body.los-ojos-menu-open .los-ojos-menu-item:nth-child(1) {
+    transform:
+      translate(-50%, -50%)
+      translate(0, -180px)
+      scale(1);
+  }
+
+  body.los-ojos-menu-open .los-ojos-menu-item:nth-child(2) {
+    transform:
+      translate(-50%, -50%)
+      translate(170px, -55px)
+      scale(1);
+  }
+
+  body.los-ojos-menu-open .los-ojos-menu-item:nth-child(3) {
+    transform:
+      translate(-50%, -50%)
+      translate(105px, 135px)
+      scale(1);
+  }
+
+  body.los-ojos-menu-open .los-ojos-menu-item:nth-child(4) {
+    transform:
+      translate(-50%, -50%)
+      translate(-105px, 135px)
+      scale(1);
+  }
+
+  body.los-ojos-menu-open .los-ojos-menu-item:nth-child(5) {
+    transform:
+      translate(-50%, -50%)
+      translate(-170px, -55px)
+      scale(1);
+  }
+
+
+  @media (max-width: 700px) {
+
+    .los-ojos-menu-item {
+      font-size: 14px;
+    }
+
+    body.los-ojos-menu-open .los-ojos-menu-item:nth-child(1) {
+      transform:
+        translate(-50%, -50%)
+        translate(0, -135px)
+        scale(1);
+    }
+
+    body.los-ojos-menu-open .los-ojos-menu-item:nth-child(2) {
+      transform:
+        translate(-50%, -50%)
+        translate(110px, -40px)
+        scale(1);
+    }
+
+    body.los-ojos-menu-open .los-ojos-menu-item:nth-child(3) {
+      transform:
+        translate(-50%, -50%)
+        translate(70px, 105px)
+        scale(1);
+    }
+
+    body.los-ojos-menu-open .los-ojos-menu-item:nth-child(4) {
+      transform:
+        translate(-50%, -50%)
+        translate(-70px, 105px)
+        scale(1);
+    }
+
+    body.los-ojos-menu-open .los-ojos-menu-item:nth-child(5) {
+      transform:
+        translate(-50%, -50%)
+        translate(-110px, -40px)
+        scale(1);
+    }
+  }
+
 </style>
 
 
-<img id="los-ojos-logo" src="<?php echo esc_url(get_stylesheet_directory_uri() . '/assets/logo.svg'); ?>"
-  alt="Los Ojos" />
+<img
+  id="los-ojos-logo"
+  src="<?php echo get_stylesheet_directory_uri(); ?>/assets/logo.svg"
+  alt="Los Ojos"
+  role="button"
+  tabindex="0"
+  aria-label="Abrir navegación"
+/>
+
+
+<nav id="los-ojos-menu" aria-label="Navegación principal">
+
+  <a
+    class="los-ojos-menu-item"
+    href="<?php echo esc_url(home_url('/manifiesto/')); ?>"
+  >
+    Manifiesto
+  </a>
+
+  <a
+    class="los-ojos-menu-item"
+    href="<?php echo esc_url(home_url('/disciplinas/')); ?>"
+  >
+    Disciplinas
+  </a>
+
+  <a
+    class="los-ojos-menu-item"
+    href="<?php echo esc_url(home_url('/servicios/')); ?>"
+  >
+    Servicios
+  </a>
+
+  <a
+    class="los-ojos-menu-item"
+    href="<?php echo esc_url(home_url('/laboratorio/')); ?>"
+  >
+    Laboratorio
+  </a>
+
+  <a
+    class="los-ojos-menu-item"
+    href="<?php echo esc_url(home_url('/contacto/')); ?>"
+  >
+    Contacto
+  </a>
+
+</nav>
 
 
 <main id="primary" class="site-main los-ojos-hero">
@@ -92,14 +278,16 @@ get_header();
     <h1>Los Ojos</h1>
 
     <h2>
-      Diseñamos y desarrollamos objetos y experiencias donde la tecnología abre nuevas formas de interacción.
+      Diseñamos y desarrollamos objetos y experiencias que combinan
+      tecnología, espacio, audiovisual e interacción.
     </h2>
 
     <p>
-      Los Ojos nace de una convicción sencilla: la tecnología como herramienta,
-      lenguaje, medio creativo y forma de pensamiento capaz de configurar nuevas
-      maneras de relacionarnos con el mundo. Un campo de convergencia entre código,
-      imagen, espacio, sonido, movimiento, humanos y más que humanos.
+      Los Ojos nace de una convicción sencilla: la tecnología como
+      herramienta, lenguaje, medio creativo y forma de pensamiento capaz
+      de configurar nuevas maneras de relacionarnos con el mundo.
+      Un campo de convergencia entre código, imagen, espacio, sonido,
+      movimiento, humanos y más que humanos.
     </p>
 
   </div>
@@ -110,246 +298,366 @@ get_header();
 <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js"></script>
 
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
 
-    const { Engine, Bodies, Body, Composite } = Matter;
+document.addEventListener("DOMContentLoaded", () => {
 
-    const engine = Engine.create({
-      gravity: {
-        x: 0,
-        y: 0
-      }
-    });
+  const { Engine, Bodies, Body, Composite } = Matter;
 
-    engine.positionIterations = 50;
-    engine.velocityIterations = 25;
+  const engine = Engine.create({
+    gravity: {
+      x: 0,
+      y: 0
+    }
+  });
 
-
-    const logo = document.getElementById("los-ojos-logo");
-
-    const canvas = document.createElement("canvas");
-    canvas.id = "los-ojos-canvas";
-
-    const ctx = canvas.getContext("2d");
-
-    document.body.appendChild(canvas);
+  engine.positionIterations = 50;
+  engine.velocityIterations = 25;
 
 
-    const eyePath = new Path2D(
-      'M0,17.935 C-1.564,20.822 -3.709,23.112 -6.43,24.811 C-9.153,26.511 -12.216,27.359 -15.611,27.359 C-19.12,27.359 -22.273,26.511 -25.076,24.811 C-27.88,23.112 -30.104,20.822 -31.75,17.935 C-33.393,15.052 -34.216,11.857 -34.216,8.352 C-34.216,4.739 -33.409,1.488 -31.788,-1.398 C-30.17,-4.282 -27.987,-6.575 -25.236,-8.271 C-22.487,-9.97 -19.387,-10.822 -15.935,-10.822 C-12.483,-10.822 -9.382,-9.97 -6.631,-8.271 C-3.882,-6.575 -1.699,-4.282 -0.082,-1.398 C1.536,1.488 2.347,4.739 2.347,8.352 C2.347,11.857 1.564,15.052 0,17.935 M33.83,7.092 C28.314,0.395 8.123,-21.932 -15.938,-21.932 C-39.986,-21.932 -60.165,0.367 -65.697,7.08 C-66.629,8.213 -66.629,9.725 -65.697,10.858 C-60.165,17.568 -39.986,39.867 -15.938,39.867 C8.123,39.867 28.314,17.542 33.83,10.846 C34.756,9.721 34.756,8.217 33.83,7.092'
+  const logo = document.getElementById("los-ojos-logo");
+
+
+  /*
+   * -----------------------------------------
+   * NAVEGACIÓN
+   * -----------------------------------------
+   */
+
+  function toggleMenu() {
+
+    document.body.classList.toggle("los-ojos-menu-open");
+
+    const isOpen =
+      document.body.classList.contains("los-ojos-menu-open");
+
+    logo.setAttribute(
+      "aria-label",
+      isOpen
+        ? "Cerrar navegación"
+        : "Abrir navegación"
     );
 
-
-    const isMobile = window.innerWidth < 768;
-    const N = isMobile ? 56 : 156;
-
-    const eyes = [];
-
-    const W = () => canvas.width;
-    const H = () => canvas.height;
-
-    const mouse = {
-      x: -9999,
-      y: -9999
-    };
+    updateLogoBody();
+  }
 
 
-    function resize() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+  logo.addEventListener("click", toggleMenu);
+
+
+  logo.addEventListener("keydown", (event) => {
+
+    if (
+      event.key === "Enter" ||
+      event.key === " "
+    ) {
+
+      event.preventDefault();
+      toggleMenu();
+
     }
 
-    resize();
-
-    window.addEventListener("resize", resize);
+  });
 
 
-    window.addEventListener("mousemove", (e) => {
+  const canvas = document.createElement("canvas");
+
+  canvas.id = "los-ojos-canvas";
+
+  const ctx = canvas.getContext("2d");
+
+  document.body.appendChild(canvas);
+
+
+  const eyePath = new Path2D(
+    'M0,17.935 C-1.564,20.822 -3.709,23.112 -6.43,24.811 C-9.153,26.511 -12.216,27.359 -15.611,27.359 C-19.12,27.359 -22.273,26.511 -25.076,24.811 C-27.88,23.112 -30.104,20.822 -31.75,17.935 C-33.393,15.052 -34.216,11.857 -34.216,8.352 C-34.216,4.739 -33.409,1.488 -31.788,-1.398 C-30.17,-4.282 -27.987,-6.575 -25.236,-8.271 C-22.487,-9.97 -19.387,-10.822 -15.935,-10.822 C-12.483,-10.822 -9.382,-9.97 -6.631,-8.271 C-3.882,-6.575 -1.699,-4.282 -0.082,-1.398 C1.536,1.488 2.347,4.739 2.347,8.352 C2.347,11.857 1.564,15.052 0,17.935 M33.83,7.092 C28.314,0.395 8.123,-21.932 -15.938,-21.932 C-39.986,-21.932 -60.165,0.367 -65.697,7.08 C-66.629,8.213 -66.629,9.725 -65.697,10.858 C-60.165,17.568 -39.986,39.867 -15.938,39.867 C8.123,39.867 28.314,17.542 33.83,10.846 C34.756,9.721 34.756,8.217 33.83,7.092'
+  );
+
+
+  const isMobile = window.innerWidth < 768;
+
+  const N = isMobile ? 56 : 156;
+
+  const eyes = [];
+
+  const W = () => canvas.width;
+  const H = () => canvas.height;
+
+  const mouse = {
+    x: -9999,
+    y: -9999
+  };
+
+
+  function resize() {
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+  }
+
+
+  resize();
+
+  window.addEventListener(
+    "resize",
+    resize
+  );
+
+
+  window.addEventListener(
+    "mousemove",
+    (e) => {
       mouse.x = e.clientX;
       mouse.y = e.clientY;
-    });
+    }
+  );
 
 
-    window.addEventListener("mouseleave", () => {
+  window.addEventListener(
+    "mouseleave",
+    () => {
       mouse.x = -9999;
       mouse.y = -9999;
-    });
+    }
+  );
 
 
-    window.addEventListener("touchmove", (e) => {
+  window.addEventListener(
+    "touchmove",
+    (e) => {
+
       const t = e.touches[0];
 
       mouse.x = t.clientX;
       mouse.y = t.clientY;
 
-    }, {
+    },
+    {
       passive: true
-    });
+    }
+  );
 
 
-    window.addEventListener("touchend", () => {
+  window.addEventListener(
+    "touchend",
+    () => {
+
       mouse.x = -9999;
       mouse.y = -9999;
-    });
 
-
-    const wallOpts = {
-      isStatic: true,
-      restitution: 0.4
-    };
-
-    let walls = [];
-
-
-    function makeWalls() {
-
-      walls.forEach((w) => {
-        Composite.remove(engine.world, w);
-      });
-
-      const t = 60;
-
-      walls = [
-        Bodies.rectangle(
-          W() / 2,
-          -t / 2,
-          W() + t * 2,
-          t,
-          wallOpts
-        ),
-
-        Bodies.rectangle(
-          W() / 2,
-          H() + t / 2,
-          W() + t * 2,
-          t,
-          wallOpts
-        ),
-
-        Bodies.rectangle(
-          -t / 2,
-          H() / 2,
-          t,
-          H() + t * 2,
-          wallOpts
-        ),
-
-        Bodies.rectangle(
-          W() + t / 2,
-          H() / 2,
-          t,
-          H() + t * 2,
-          wallOpts
-        )
-      ];
-
-      Composite.add(engine.world, walls);
     }
+  );
 
-    makeWalls();
+
+  const wallOpts = {
+    isStatic: true,
+    restitution: 0.4
+  };
+
+  let walls = [];
 
 
-    window.addEventListener("resize", () => {
+  function makeWalls() {
+
+    walls.forEach(
+      (w) => Composite.remove(
+        engine.world,
+        w
+      )
+    );
+
+    const t = 60;
+
+    walls = [
+
+      Bodies.rectangle(
+        W() / 2,
+        -t / 2,
+        W() + t * 2,
+        t,
+        wallOpts
+      ),
+
+      Bodies.rectangle(
+        W() / 2,
+        H() + t / 2,
+        W() + t * 2,
+        t,
+        wallOpts
+      ),
+
+      Bodies.rectangle(
+        -t / 2,
+        H() / 2,
+        t,
+        H() + t * 2,
+        wallOpts
+      ),
+
+      Bodies.rectangle(
+        W() + t / 2,
+        H() / 2,
+        t,
+        H() + t * 2,
+        wallOpts
+      )
+
+    ];
+
+    Composite.add(
+      engine.world,
+      walls
+    );
+
+  }
+
+
+  makeWalls();
+
+
+  window.addEventListener(
+    "resize",
+    () => {
+
       makeWalls();
       updateLogoBody();
-    });
+
+    }
+  );
 
 
-    let logoBody = null;
+  let logoBody = null;
 
 
-    function updateLogoBody() {
+  function updateLogoBody() {
 
-      if (logoBody) {
-        Composite.remove(engine.world, logoBody);
-      }
+    if (logoBody) {
 
-      const r = logo.getBoundingClientRect();
-
-      if (!r.width) {
-        return;
-      }
-
-      logoBody = Bodies.rectangle(
-        r.left + r.width / 2,
-        r.top + r.height / 2,
-        r.width + 40,
-        r.height + 40,
-        {
-          isStatic: true,
-          restitution: 0.8,
-          render: {
-            visible: false
-          }
-        }
+      Composite.remove(
+        engine.world,
+        logoBody
       );
 
-      Composite.add(engine.world, logoBody);
     }
 
 
-    function insideLogo(x, y) {
-
-      if (!logoBody) {
-        return false;
-      }
-
-      const r = logo.getBoundingClientRect();
-
-      return (
-        x >= r.left &&
-        x <= r.right &&
-        y >= r.top &&
-        y <= r.bottom
-      );
-    }
+    const r =
+      logo.getBoundingClientRect();
 
 
-    const minDist = (r1, r2) => {
-      return (r1 + r2) * 4;
-    };
+    if (!r.width) return;
 
 
-    function tooClose(x, y, r) {
+    logoBody = Bodies.rectangle(
 
-      for (const e of eyes) {
+      r.left + r.width / 2,
+      r.top + r.height / 2,
 
-        const dx = e.position.x - x;
-        const dy = e.position.y - y;
+      r.width + 40,
+      r.height + 40,
 
-        if (
-          Math.sqrt(dx * dx + dy * dy) <
-          minDist(r, e.circleRadius)
-        ) {
-          return true;
+      {
+        isStatic: true,
+        restitution: 0.8,
+        render: {
+          visible: false
         }
       }
 
-      return false;
+    );
+
+
+    Composite.add(
+      engine.world,
+      logoBody
+    );
+
+  }
+
+
+  function insideLogo(x, y) {
+
+    if (!logoBody) return false;
+
+
+    const r =
+      logo.getBoundingClientRect();
+
+
+    return (
+      x >= r.left &&
+      x <= r.right &&
+      y >= r.top &&
+      y <= r.bottom
+    );
+
+  }
+
+
+  const minDist =
+    (r1, r2) =>
+      (r1 + r2) * 4;
+
+
+  function tooClose(x, y, r) {
+
+    for (const e of eyes) {
+
+      const dx =
+        e.position.x - x;
+
+      const dy =
+        e.position.y - y;
+
+      if (
+        Math.sqrt(
+          dx * dx + dy * dy
+        ) < minDist(
+          r,
+          e.circleRadius
+        )
+      ) {
+
+        return true;
+
+      }
+
     }
 
+    return false;
 
-    for (let i = 0; i < N; i++) {
-
-      const r = 6 + Math.random() * 21;
-
-      let x;
-      let y;
-      let tries = 0;
+  }
 
 
-      do {
+  for (let i = 0; i < N; i++) {
 
-        x = Math.random() * W();
-        y = Math.random() * H();
+    const r =
+      6 + Math.random() * 21;
 
-      } while (
-        (insideLogo(x, y) || tooClose(x, y, r)) &&
-        tries++ < 200
-      );
+    let x, y, tries = 0;
 
 
-      const b = Bodies.circle(
+    do {
+
+      x =
+        Math.random() * W();
+
+      y =
+        Math.random() * H();
+
+    }
+
+    while (
+      (
+        insideLogo(x, y) ||
+        tooClose(x, y, r)
+      ) &&
+      tries++ < 200
+    );
+
+
+    const b =
+      Bodies.circle(
         x,
         y,
         r,
@@ -361,181 +669,217 @@ get_header();
       );
 
 
-      Body.setVelocity(b, {
-        x: (Math.random() - 0.5) * 0.6,
-        y: (Math.random() - 0.5) * 0.6
-      });
+    Body.setVelocity(
+      b,
+      {
+        x:
+          (Math.random() - 0.5) * 0.6,
+
+        y:
+          (Math.random() - 0.5) * 0.6
+      }
+    );
 
 
-      Body.setAngle(
-        b,
-        Math.random() * Math.PI * 2
-      );
+    Body.setAngle(
+      b,
+      Math.random() *
+      Math.PI * 2
+    );
 
 
-      Body.setAngularVelocity(
-        b,
-        (Math.random() - 0.5) * 0.002
-      );
+    Body.setAngularVelocity(
+      b,
+      (Math.random() - 0.5) * 0.002
+    );
 
 
-      eyes.push(b);
+    eyes.push(b);
 
-      Composite.add(
-        engine.world,
-        b
-      );
-    }
+    Composite.add(
+      engine.world,
+      b
+    );
 
-
-    requestAnimationFrame(() => {
-      requestAnimationFrame(updateLogoBody);
-    });
+  }
 
 
-    function loop() {
-
-      Engine.update(
-        engine,
-        1000 / 60
-      );
-
-
-      ctx.fillStyle = "#000";
-      ctx.fillRect(
-        0,
-        0,
-        W(),
-        H()
-      );
+  requestAnimationFrame(
+    () =>
+      requestAnimationFrame(
+        updateLogoBody
+      )
+  );
 
 
-      eyes.forEach((c) => {
+  function loop() {
 
-        const dx = c.position.x - mouse.x;
-        const dy = c.position.y - mouse.y;
+    Engine.update(
+      engine,
+      1000 / 60
+    );
 
-        const dist = Math.sqrt(
+
+    ctx.fillStyle = "#000";
+
+    ctx.fillRect(
+      0,
+      0,
+      W(),
+      H()
+    );
+
+
+    eyes.forEach((c) => {
+
+      const dx =
+        c.position.x - mouse.x;
+
+      const dy =
+        c.position.y - mouse.y;
+
+      const dist =
+        Math.sqrt(
           dx * dx + dy * dy
         );
 
-        const rad = c.circleRadius;
 
-        const maxDist = 120 + rad;
+      const rad =
+        c.circleRadius;
+
+      const maxDist =
+        120 + rad;
+
+
+      if (
+        dist < maxDist &&
+        dist > 0.1
+      ) {
+
+        const force =
+          (
+            (maxDist - dist) /
+            maxDist
+          ) * 0.004;
+
+
+        Body.applyForce(
+          c,
+          c.position,
+          {
+            x:
+              (dx / dist) * force,
+
+            y:
+              (dy / dist) * force
+          }
+        );
+
+      }
+
+
+      for (
+        let j = 0;
+        j < eyes.length;
+        j++
+      ) {
+
+        const o = eyes[j];
+
+        if (c === o) continue;
+
+
+        const dx =
+          c.position.x -
+          o.position.x;
+
+        const dy =
+          c.position.y -
+          o.position.y;
+
+        const d =
+          Math.sqrt(
+            dx * dx + dy * dy
+          );
+
+
+        const minD =
+          (
+            c.circleRadius +
+            o.circleRadius
+          ) * 1.1;
 
 
         if (
-          dist < maxDist &&
-          dist > 0.1
+          d < minD &&
+          d > 0.1
         ) {
-
-          const force =
-            ((maxDist - dist) / maxDist) * 0.004;
-
 
           Body.applyForce(
             c,
             c.position,
             {
-              x: (dx / dist) * force,
-              y: (dy / dist) * force
+              x:
+                dx / d *
+                (minD - d) /
+                minD *
+                0.003,
+
+              y:
+                dy / d *
+                (minD - d) /
+                minD *
+                0.003
             }
           );
+
         }
 
-
-        for (
-          let j = 0;
-          j < eyes.length;
-          j++
-        ) {
-
-          const o = eyes[j];
-
-          if (c === o) {
-            continue;
-          }
+      }
 
 
-          const dx =
-            c.position.x -
-            o.position.x;
-
-          const dy =
-            c.position.y -
-            o.position.y;
-
-          const d =
-            Math.sqrt(
-              dx * dx +
-              dy * dy
-            );
+      const s =
+        rad / 28;
 
 
-          const minD =
-            (c.circleRadius +
-              o.circleRadius) * 1.1;
+      ctx.save();
 
 
-          if (
-            d < minD &&
-            d > 0.1
-          ) {
-
-            Body.applyForce(
-              c,
-              c.position,
-              {
-                x:
-                  dx / d *
-                  (minD - d) /
-                  minD *
-                  0.003,
-
-                y:
-                  dy / d *
-                  (minD - d) /
-                  minD *
-                  0.003
-              }
-            );
-          }
-        }
+      ctx.translate(
+        c.position.x,
+        c.position.y
+      );
 
 
-        const s = rad / 28;
+      ctx.rotate(c.angle);
 
 
-        ctx.save();
-
-        ctx.translate(
-          c.position.x,
-          c.position.y
-        );
-
-        ctx.rotate(c.angle);
-
-        ctx.scale(s, s);
-
-        ctx.fillStyle = "#fff";
-
-        ctx.fill(
-          eyePath,
-          "evenodd"
-        );
-
-        ctx.restore();
-
-      });
+      ctx.scale(s, s);
 
 
-      requestAnimationFrame(loop);
-    }
+      ctx.fillStyle = "#fff";
 
 
-    loop();
+      ctx.fill(
+        eyePath,
+        "evenodd"
+      );
 
-  });
+
+      ctx.restore();
+
+    });
+
+
+    requestAnimationFrame(loop);
+
+  }
+
+
+  loop();
+
+});
+
 </script>
 
 
