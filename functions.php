@@ -7,7 +7,6 @@ require_once get_stylesheet_directory() . '/inc/project-links.php';
 require_once get_stylesheet_directory() . '/inc/project-related.php';
 require_once get_stylesheet_directory() . '/inc/project-content.php';
 require_once get_stylesheet_directory() . '/inc/project-index.php';
-require_once get_stylesheet_directory() . '/inc/project-taxonomy.php';
 
 
 
