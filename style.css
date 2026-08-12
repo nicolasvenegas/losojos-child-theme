@@ -99,13 +99,16 @@ Text Domain: losojos
 }
 
 .project-index-title {
-    margin: 0;
+  margin: 0 0 1rem;
+  font-size: 18px;
+  color: #B09EFF;
 }
 
 .project-index-year,
 .project-index-type,
 .project-index-disciplines {
     margin-top: 0.35rem;
+    font-size: 14px;
 }
 
 .current-menu-item span{
