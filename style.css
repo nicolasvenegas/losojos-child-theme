@@ -114,6 +114,11 @@ Text Domain: losojos
     margin-top: 0.35rem;
     font-size: 13px;
 }
+
+.project-index-type a,
+.project-index-disciplines a {
+color: #B09EFF;
+}
 .wp-block-list{
     padding-left: 14px;
 }
