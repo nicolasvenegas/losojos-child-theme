@@ -103,7 +103,7 @@ get_header();
 </a>
 
 
-<main id="primary" class="site-main los-ojos-hero">
+<main id="primary" class="site-main los-ojos-hero" style="visibility: hidden;">
 
   <div class="screen-reader-text">
     <h1>Los Ojos</h1>
