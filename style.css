@@ -13,6 +13,8 @@ Text Domain: losojos
 */
 
 
+
+
 /* =========================================
    PROJECT TAXONOMY
 ========================================= */
@@ -234,6 +236,11 @@ Text Domain: losojos
 .current-menu-item span {
     color: #00ffab;
 }
+
+#modal-1{
+    background: black;
+}
+
 
 
 /* =========================================
