@@ -214,6 +214,10 @@ Text Domain: losojos
     align-self: flex-end;
 }
 
+.home #header, .home #footer{
+    display: none !important;
+}
+
 
 /* =========================================
    PROJECT INDEX LOADING
