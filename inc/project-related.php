@@ -2,75 +2,79 @@
 
 function losojos_project_related_shortcode() {
 
-    if (!is_singular('proyecto')) {
+    if ( ! is_singular( 'proyecto' ) ) {
         return '';
     }
 
-    $projects = get_field('related_projects');
+    $projects = get_field( 'related_projects' );
 
-    if (empty($projects)) {
+    if ( empty( $projects ) || ! is_array( $projects ) ) {
         return '';
     }
 
-    ob_start();
-    ?>
+    $output = '';
 
-    <section class="project-related">
-        <h2>Proyectos relacionados</h2>
+    foreach ( $projects as $project ) {
 
-        <div class="project-related-grid">
+        $project_id = is_object( $project ) ? $project->ID : $project;
 
-            <?php foreach ($projects as $project) :
+        if ( ! $project_id ) {
+            continue;
+        }
 
-                $title = get_the_title($project);
-                $link  = get_permalink($project);
-                $year  = get_field('project_year', $project);
+        $title = get_the_title( $project_id );
+        $link  = get_permalink( $project_id );
+        $year  = get_field( 'project_year', $project_id );
 
-            ?>
+        if ( ! $link || ! $title ) {
+            continue;
+        }
 
-                <article class="project-related-card">
+        $output .= '<article class="project-related-card">';
 
-                    <?php if (has_post_thumbnail($project)) : ?>
-                        <a
-                            class="project-related-card-link"
-                            href="<?php echo esc_url($link); ?>"
-                            aria-label="<?php echo esc_attr('Ver proyecto: ' . $title); ?>"
-                        >
-                            <?php
-                            echo get_the_post_thumbnail(
-                                $project,
-                                'medium',
-                                array(
-                                    'alt' => $title,
-                                )
-                            );
-                            ?>
-                        </a>
-                    <?php endif; ?>
+        if ( has_post_thumbnail( $project_id ) ) {
 
-                    <h3>
-                        <a
-                            class="project-related-card-title"
-                            href="<?php echo esc_url($link); ?>"
-                        ><?php echo esc_html($title); ?></a>
-                    </h3>
+            $output .= '<a class="project-related-card-link"';
+            $output .= ' href="' . esc_url( $link ) . '"';
+            $output .= ' aria-label="' . esc_attr( 'Ver proyecto: ' . $title ) . '">';
 
-                    <?php if ($year) : ?>
-                        <p class="project-related-card-year">
-                            <?php echo esc_html($year); ?>
-                        </p>
-                    <?php endif; ?>
+            $output .= get_the_post_thumbnail(
+                $project_id,
+                'medium',
+                [
+                    'alt' => $title,
+                ]
+            );
 
-                </article>
+            $output .= '</a>';
+        }
 
-            <?php endforeach; ?>
+        $output .= '<h3>';
+        $output .= '<a class="project-related-card-title"';
+        $output .= ' href="' . esc_url( $link ) . '">';
+        $output .= esc_html( $title );
+        $output .= '</a>';
+        $output .= '</h3>';
 
-        </div>
-    </section>
+        if ( ! empty( $year ) ) {
+            $output .= '<p class="project-related-card-year">';
+            $output .= esc_html( $year );
+            $output .= '</p>';
+        }
 
-    <?php
+        $output .= '</article>';
+    }
 
-    return ob_get_clean();
+    if ( empty( $output ) ) {
+        return '';
+    }
+
+    return '<section class="project-related">'
+        . '<h2>Proyectos relacionados</h2>'
+        . '<div class="project-related-grid">'
+        . $output
+        . '</div>'
+        . '</section>';
 }
 
 add_shortcode(
