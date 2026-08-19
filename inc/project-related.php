@@ -16,7 +16,7 @@ function losojos_project_related_shortcode() {
 
     foreach ( $projects as $project ) {
 
-        $project_id = is_object( $project ) ? $project->ID : $project;
+        $project_id = is_object( $project ) ? $project->ID : (int) $project;
 
         if ( ! $project_id ) {
             continue;
@@ -26,7 +26,7 @@ function losojos_project_related_shortcode() {
         $link  = get_permalink( $project_id );
         $year  = get_field( 'project_year', $project_id );
 
-        if ( ! $link || ! $title ) {
+        if ( ! $title || ! $link ) {
             continue;
         }
 
@@ -34,50 +34,52 @@ function losojos_project_related_shortcode() {
 
         if ( has_post_thumbnail( $project_id ) ) {
 
-            $output .= '<a class="project-related-card-link"';
-            $output .= ' href="' . esc_url( $link ) . '"';
-            $output .= ' aria-label="' . esc_attr( 'Ver proyecto: ' . $title ) . '">';
+            $output .= sprintf(
+                '<a class="project-related-card-link" href="%s" aria-label="%s">',
+                esc_url( $link ),
+                esc_attr( 'Ver proyecto: ' . $title )
+            );
 
             $output .= get_the_post_thumbnail(
                 $project_id,
                 'medium',
                 [
-                    'alt' => $title,
+                    'alt'    => $title,
+                    'loading' => 'lazy',
+                    'decoding' => 'async',
                 ]
             );
 
             $output .= '</a>';
         }
 
-        $output .= '<h3>';
-        $output .= '<a class="project-related-card-title"';
-        $output .= ' href="' . esc_url( $link ) . '">';
-        $output .= esc_html( $title );
-        $output .= '</a>';
-        $output .= '</h3>';
+        $output .= sprintf(
+            '<h3><a class="project-related-card-title" href="%s">%s</a></h3>',
+            esc_url( $link ),
+            esc_html( $title )
+        );
 
-        if ( ! empty( $year ) ) {
-            $output .= '<p class="project-related-card-year">';
-            $output .= esc_html( $year );
-            $output .= '</p>';
+        if ( $year ) {
+            $output .= sprintf(
+                '<p class="project-related-card-year">%s</p>',
+                esc_html( $year )
+            );
         }
 
         $output .= '</article>';
     }
 
-    if ( empty( $output ) ) {
+    if ( ! $output ) {
         return '';
     }
 
-    return '<section class="project-related">'
-        . '<h2>Proyectos relacionados</h2>'
-        . '<div class="project-related-grid">'
-        . $output
-        . '</div>'
-        . '</section>';
+    return sprintf(
+        '<section class="project-related">
+            <h2>Proyectos relacionados</h2>
+            <div class="project-related-grid">%s</div>
+        </section>',
+        $output
+    );
 }
 
-add_shortcode(
-    'project_related',
-    'losojos_project_related_shortcode'
-);
+add_shortcode( 'project_related', 'losojos_project_related_shortcode' );
