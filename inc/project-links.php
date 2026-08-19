@@ -13,14 +13,18 @@ function losojos_project_links_shortcode() {
 
         <?php
 
+        $project_title = get_the_title();
+
         $links = [
             'project_repository' => [
                 'label' => 'Repositorio',
-                'text'  => 'GitHub ↗'
+                'text'  => 'GitHub ↗',
+                'aria'  => 'Repositorio de ' . $project_title . ' — GitHub'
             ],
             'project_url' => [
                 'label' => 'Sitio web',
-                'text'  => 'Visitar ↗'
+                'text'  => 'Visitar ↗',
+                'aria'  => 'Sitio web de ' . $project_title
             ]
         ];
 
@@ -35,14 +39,18 @@ function losojos_project_links_shortcode() {
         ?>
 
             <div class="project-meta-item">
-                <strong><?php echo esc_html($config['label']); ?>:</strong>
 
-                <a href="<?php echo esc_url($url); ?>"
-                   target="_blank"
-                   rel="noopener noreferrer">
+                <strong>
+                    <?php echo esc_html($config['label']); ?>:
+                </strong>
 
+                <a
+                    href="<?php echo esc_url($url); ?>"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="<?php echo esc_attr($config['aria']); ?>"
+                >
                     <?php echo esc_html($config['text']); ?>
-
                 </a>
 
             </div>
