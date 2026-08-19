@@ -9,7 +9,7 @@ function losojos_project_links_shortcode() {
     ob_start();
     ?>
 
-    <div class="project-meta">
+    <div class="project-links">
 
         <?php
 
@@ -38,7 +38,7 @@ function losojos_project_links_shortcode() {
 
         ?>
 
-            <div class="project-meta-item">
+            <div class="project-link-item">
 
                 <strong>
                     <?php echo esc_html($config['label']); ?>:
@@ -49,9 +49,7 @@ function losojos_project_links_shortcode() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="<?php echo esc_attr($config['aria']); ?>"
-                >
-                    <?php echo esc_html($config['text']); ?>
-                </a>
+                ><?php echo esc_html($config['text']); ?></a>
 
             </div>
 
@@ -62,7 +60,6 @@ function losojos_project_links_shortcode() {
     <?php
 
     return ob_get_clean();
-
 }
 
 add_shortcode(
