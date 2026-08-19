@@ -34,12 +34,18 @@ function losojos_project_related_shortcode() {
                         <a
                             class="project-related-card-link"
                             href="<?php echo esc_url($link); ?>"
-                        ><?php
+                            aria-label="<?php echo esc_attr('Ver proyecto: ' . $title); ?>"
+                        >
+                            <?php
                             echo get_the_post_thumbnail(
                                 $project,
-                                'medium'
+                                'medium',
+                                array(
+                                    'alt' => $title,
+                                )
                             );
-                        ?></a>
+                            ?>
+                        </a>
                     <?php endif; ?>
 
                     <h3>
@@ -50,7 +56,9 @@ function losojos_project_related_shortcode() {
                     </h3>
 
                     <?php if ($year) : ?>
-                        <p class="project-related-card-year"><?php echo esc_html($year); ?></p>
+                        <p class="project-related-card-year">
+                            <?php echo esc_html($year); ?>
+                        </p>
                     <?php endif; ?>
 
                 </article>
