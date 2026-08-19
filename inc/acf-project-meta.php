@@ -6,92 +6,38 @@ function losojos_project_meta_shortcode() {
         return '';
     }
 
-    ob_start();
+    $fields = [
+        'project_year' => 'Año',
+        'project_start_year' => 'Inicio',
+        'project_end_year' => 'Término',
+        'project_status' => 'Estado',
+        'project_license' => 'Licencia',
+        'project_tools' => 'Herramientas / Medios',
+        'project_client' => 'Cliente / Institución',
+        'project_location' => 'Ubicación',
+        'project_collaborators' => 'Colaboradores',
+    ];
 
-    ?>
+    $output = '<div class="project-meta">';
 
-    <div class="project-meta">
+    foreach ($fields as $field => $label) {
 
-        <?php if (get_field('project_year')) : ?>
-            <div class="project-meta-item">
-                <strong>Año:</strong>
-                <?php echo esc_html(get_field('project_year')); ?>
-            </div>
-        <?php endif; ?>
+        $value = get_field($field);
 
+        if (empty($value)) {
+            continue;
+        }
 
-        <?php if (get_field('project_start_year')) : ?>
-            <div class="project-meta-item">
-                <strong>Inicio:</strong>
-                <?php echo esc_html(get_field('project_start_year')); ?>
-            </div>
-        <?php endif; ?>
+        $output .= '<div class="project-meta-item">';
+        $output .= '<strong>' . esc_html($label) . ':</strong>';
+        $output .= esc_html($value);
+        $output .= '</div>';
+    }
 
+    $output .= '</div>';
 
-        <?php if (get_field('project_end_year')) : ?>
-            <div class="project-meta-item">
-                <strong>Término:</strong>
-                <?php echo esc_html(get_field('project_end_year')); ?>
-            </div>
-        <?php endif; ?>
-
-
-        <?php if (get_field('project_status')) : ?>
-            <div class="project-meta-item">
-                <strong>Estado:</strong>
-                <?php echo esc_html(get_field('project_status')); ?>
-            </div>
-        <?php endif; ?>
-
-
-        <?php if (get_field('project_license')) : ?>
-            <div class="project-meta-item">
-                <strong>Licencia:</strong>
-                <?php echo esc_html(get_field('project_license')); ?>
-            </div>
-        <?php endif; ?>
-
-
-        <?php if (get_field('project_tools')) : ?>
-            <div class="project-meta-item">
-                <strong>Herramientas / Medios:</strong>
-                <?php echo esc_html(get_field('project_tools')); ?>
-            </div>
-        <?php endif; ?>
-
-
-        <?php if (get_field('project_client')) : ?>
-            <div class="project-meta-item">
-                <strong>Cliente / Institución:</strong>
-                <?php echo esc_html(get_field('project_client')); ?>
-            </div>
-        <?php endif; ?>
-
-
-        <?php if (get_field('project_location')) : ?>
-            <div class="project-meta-item">
-                <strong>Ubicación:</strong>
-                <?php echo esc_html(get_field('project_location')); ?>
-            </div>
-        <?php endif; ?>
-
-
-        <?php if (get_field('project_collaborators')) : ?>
-            <div class="project-meta-item">
-                <strong>Colaboradores:</strong>
-                <?php echo esc_html(get_field('project_collaborators')); ?>
-            </div>
-        <?php endif; ?>
-
-
-    </div>
-
-    <?php
-
-    return ob_get_clean();
-
+    return $output;
 }
-
 
 add_shortcode(
     'project_meta',
