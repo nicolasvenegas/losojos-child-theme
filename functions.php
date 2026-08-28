@@ -63,3 +63,9 @@ function add_dimensions_to_site_logo($attr, $attachment, $size) {
     return $attr;
 }
 
+add_action('wp_head', 'preload_critical_fonts', 1);
+function preload_critical_fonts() {
+    echo '<link rel="preload" href="https://losojos.cl/wp-content/uploads/fonts/terminal-grotesque.ttf" as="font" type="font/ttf" crossorigin>' . "\n";
+    // Si usas la fuente woff2 de Chivo como principal, agrega también:
+    // echo '<link rel="preload" href="https://losojos.cl/wp-content/uploads/fonts/va9b4kzIxd1KFppkaRKvDRPJVDf_vB_ukmDSFXjQiQ.woff2" as="font" type="font/woff2" crossorigin>' . "\n";
+}
