@@ -52,9 +52,3 @@ add_filter(
 );
 
 
-// Agregar metaetiqueta viewport si no existe
-add_action('wp_head', 'add_custom_viewport_meta', 1);
-function add_custom_viewport_meta() {
-    echo '<meta name="viewport" content="width=device-width, initial-scale=1">' . "\n";
-}
-
