@@ -245,8 +245,8 @@ Text Domain: losojos
     background: black;
 }
 .custom-logo {
-  width: 200px; /* o el tamaño que necesites */
-  height: 60px;
+  width: 200px !important; /* o el tamaño que necesites */
+  height: 60px !important; /* o el tamaño que necesites */
 }
 
 
