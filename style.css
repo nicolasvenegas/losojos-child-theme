@@ -245,6 +245,9 @@ Text Domain: losojos
     background: black;
 }
 
+body.home h1.wp-block-post-title {
+    display: none !important;
+}
 
 /* =========================================
    RESPONSIVE
