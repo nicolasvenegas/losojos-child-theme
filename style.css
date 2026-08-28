@@ -245,7 +245,7 @@ Text Domain: losojos
     background: black;
 }
 
-body.home h1.wp-block-post-title {
+body.home h1.wp-block-post-title, body.page-id-442 h1.wp-block-post-title{
     display: none !important;
 }
 
