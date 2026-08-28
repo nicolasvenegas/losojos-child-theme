@@ -1,4 +1,3 @@
-// los-ojos-animation.js
 (function() {
   'use strict';
 
@@ -8,19 +7,22 @@
       return;
     }
 
-    const { Engine, Bodies, Body, Composite } = Matter;
-    const engine = Engine.create({ gravity: { x: 0, y: 0 } });
-    engine.positionIterations = 50;
-    engine.velocityIterations = 25;
-
+    // 1. Buscamos el canvas que YA existe en el HTML (generado por el shortcode)
     const canvas = document.getElementById("los-ojos-canvas");
     if (!canvas) return;
 
     const ctx = canvas.getContext("2d");
+    const { Engine, Bodies, Body, Composite } = Matter;
+    
+    const engine = Engine.create({ gravity: { x: 0, y: 0 } });
+    engine.positionIterations = 50;
+    engine.velocityIterations = 25;
+
     const W = () => canvas.width;
     const H = () => canvas.height;
     const mouse = { x: -9999, y: -9999 };
 
+    // 2. Función de resize adaptada al contenedor, no a la ventana completa
     function resize() {
       canvas.width = canvas.offsetWidth;
       canvas.height = canvas.offsetHeight;
@@ -28,25 +30,26 @@
     resize();
     window.addEventListener("resize", resize);
 
-    window.addEventListener("mousemove", (e) => {
+    // Eventos del mouse/touch relativos al canvas
+    canvas.addEventListener("mousemove", (e) => {
       const rect = canvas.getBoundingClientRect();
       mouse.x = e.clientX - rect.left;
       mouse.y = e.clientY - rect.top;
     });
 
-    window.addEventListener("mouseleave", () => {
+    canvas.addEventListener("mouseleave", () => {
       mouse.x = -9999;
       mouse.y = -9999;
     });
 
-    window.addEventListener("touchmove", (e) => {
+    canvas.addEventListener("touchmove", (e) => {
       const t = e.touches[0];
       const rect = canvas.getBoundingClientRect();
       mouse.x = t.clientX - rect.left;
       mouse.y = t.clientY - rect.top;
     }, { passive: true });
 
-    window.addEventListener("touchend", () => {
+    canvas.addEventListener("touchend", () => {
       mouse.x = -9999;
       mouse.y = -9999;
     });
@@ -144,6 +147,7 @@
     setTimeout(() => { if (!lastTime) loop(performance.now()); }, 100);
   }
 
+  // Ejecutar cuando el DOM esté listo
   if (document.readyState === 'loading') {
     document.addEventListener("DOMContentLoaded", initMatterAnimation);
   } else {

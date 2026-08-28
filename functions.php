@@ -62,9 +62,8 @@ function add_dimensions_to_site_logo($attr, $attachment, $size) {
     }
     return $attr;
 }
-
 /**
- * Shortcode para la animación de Los Ojos
+ * Shortcode para la animación Hero de Los Ojos
  * Uso: [los_ojos_hero titulo="Los Ojos" descripcion="Diseñamos y desarrollamos..."]
  */
 function los_ojos_hero_shortcode($atts) {
@@ -73,7 +72,7 @@ function los_ojos_hero_shortcode($atts) {
         'descripcion' => 'Diseñamos y desarrollamos objetos y experiencias que combinan tecnología, espacio, audiovisual e interacción.',
     ), $atts);
 
-    // Cargar Matter.js desde CDN (solo cuando se use el shortcode)
+    // 1. Cargar Matter.js desde CDN
     wp_enqueue_script(
         'matter-js',
         'https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js',
@@ -82,28 +81,33 @@ function los_ojos_hero_shortcode($atts) {
         true
     );
 
-    // Cargar CSS de la animación
+    // 2. Cargar CSS de la animación
     wp_enqueue_style(
         'los-ojos-animation-css',
         get_stylesheet_directory_uri() . '/assets/css/los-ojos-animation.css',
         array(),
-        '1.0.0'
+        '1.0.2' // Versión actualizada para forzar caché
     );
 
-    // Cargar JS de la animación (depende de matter-js)
+    // 3. Cargar JS de la animación
     wp_enqueue_script(
         'los-ojos-animation-js',
         get_stylesheet_directory_uri() . '/assets/js/los-ojos-animation.js',
         array('matter-js'),
-        '1.0.2',
+        '1.0.2', // Versión actualizada
         true
     );
 
-    // HTML del shortcode
+    // 4. Generar el HTML estructurado
     ob_start();
     ?>
+    <section class="los-ojos-hero-section">
         <canvas id="los-ojos-canvas"></canvas>
-
+        <div class="los-ojos-content">
+            <h1><?php echo esc_html($atts['titulo']); ?></h1>
+            <p><?php echo esc_html($atts['descripcion']); ?></p>
+        </div>
+    </section>
     <?php
     return ob_get_clean();
 }
