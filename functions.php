@@ -52,3 +52,13 @@ add_filter(
 );
 
 
+// Añadir dimensiones al logo del sitio
+add_filter('wp_get_attachment_image_attributes', 'add_dimensions_to_site_logo', 10, 3);
+function add_dimensions_to_site_logo($attr, $attachment, $size) {
+    // Solo aplicar al logo del sitio
+    if (isset($attr['class']) && strpos($attr['class'], 'custom-logo') !== false) {
+        $attr['width'] = '120';  // Ajusta al ancho real
+        $attr['height'] = '60';  // Ajusta al alto real
+    }
+    return $attr;
+}
