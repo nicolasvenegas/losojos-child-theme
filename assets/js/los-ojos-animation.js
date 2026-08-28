@@ -7,9 +7,14 @@
       return;
     }
 
-    // 1. Buscamos el canvas que YA existe en el HTML (generado por el shortcode)
     const canvas = document.getElementById("los-ojos-canvas");
     if (!canvas) return;
+
+    // ESPERAR a que el canvas tenga dimensiones reales
+    if (canvas.offsetWidth === 0 || canvas.offsetHeight === 0) {
+      setTimeout(initMatterAnimation, 100);
+      return;
+    }
 
     const ctx = canvas.getContext("2d");
     const { Engine, Bodies, Body, Composite } = Matter;
@@ -18,19 +23,22 @@
     engine.positionIterations = 50;
     engine.velocityIterations = 25;
 
+    // Establecer dimensiones explícitas
+    canvas.width = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+
     const W = () => canvas.width;
     const H = () => canvas.height;
     const mouse = { x: -9999, y: -9999 };
 
-    // 2. Función de resize adaptada al contenedor, no a la ventana completa
     function resize() {
       canvas.width = canvas.offsetWidth;
       canvas.height = canvas.offsetHeight;
+      makeWalls();
     }
     resize();
     window.addEventListener("resize", resize);
 
-    // Eventos del mouse/touch relativos al canvas
     canvas.addEventListener("mousemove", (e) => {
       const rect = canvas.getBoundingClientRect();
       mouse.x = e.clientX - rect.left;
@@ -69,7 +77,6 @@
       Composite.add(engine.world, walls);
     }
     makeWalls();
-    window.addEventListener("resize", makeWalls);
 
     const eyePath = new Path2D('M0,17.935 C-1.564,20.822 -3.709,23.112 -6.43,24.811 C-9.153,26.511 -12.216,27.359 -15.611,27.359 C-19.12,27.359 -22.273,26.511 -25.076,24.811 C-27.88,23.112 -30.104,20.822 -31.75,17.935 C-33.393,15.052 -34.216,11.857 -34.216,8.352 C-34.216,4.739 -33.409,1.488 -31.788,-1.398 C-30.17,-4.282 -27.987,-6.575 -25.236,-8.271 C-22.487,-9.97 -19.387,-10.822 -15.935,-10.822 C-12.483,-10.822 -9.382,-9.97 -6.631,-8.271 C-3.882,-6.575 -1.699,-4.282 -0.082,-1.398 C1.536,1.488 2.347,4.739 2.347,8.352 C2.347,11.857 1.564,15.052 0,17.935 M33.83,7.092 C28.314,0.395 8.123,-21.932 -15.938,-21.932 C-39.986,-21.932 -60.165,0.367 -65.697,7.08 C-66.629,8.213 -66.629,9.725 -65.697,10.858 C-60.165,17.568 -39.986,39.867 -15.938,39.867 C8.123,39.867 28.314,17.542 33.83,10.846 C34.756,9.721 34.756,8.217 33.83,7.092');
 
@@ -147,7 +154,6 @@
     setTimeout(() => { if (!lastTime) loop(performance.now()); }, 100);
   }
 
-  // Ejecutar cuando el DOM esté listo
   if (document.readyState === 'loading') {
     document.addEventListener("DOMContentLoaded", initMatterAnimation);
   } else {
