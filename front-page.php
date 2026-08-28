@@ -98,7 +98,7 @@ get_header();
 </a>
 
 <!-- MAIN CON role="main" PARA ARREGLAR ACCESIBILIDAD (97 → 100) -->
-<main id="primary" class="site-main los-ojos-hero" role="main" style="visibility: hidden;">
+<main id="primary" class="site-main los-ojos-hero" role="main">
   <div class="screen-reader-text">
     <h1>Los Ojos</h1>
     <h2>Diseñamos y desarrollamos objetos y experiencias que combinan tecnología, espacio, audiovisual e interacción.</h2>
