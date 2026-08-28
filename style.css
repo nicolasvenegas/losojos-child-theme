@@ -251,7 +251,7 @@ body.home h1.wp-block-post-title {
 
 main.wp-block-group {
     margin-top: 60px !important;
-    margin-bottom: 0 !important;
+    margin-bottom: 60px !important;
     padding-top: 0 !important; /* O el valor que prefieras, ej: 20px */
     padding-bottom: 0 !important;
 }
