@@ -1,119 +1,7 @@
-<?php
-/**
- * Template Name: Inicio Interactiva
- */
-get_header();
-?>
-
-<style>
-  body.home .entry-header,
-  body.home .page-title,
-  body.home h1.entry-title,
-  body.home .kadence-page-header {
-    display: none !important;
-  }
-  body.home {
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background: #000;
-  }
-  #los-ojos-canvas {
-    display: block;
-    position: fixed;
-    inset: 0;
-    z-index: 1;
-    width: 100vw;
-    height: 100vh;
-    /* CRÍTICO: Forzar capa GPU para renderizado instantáneo en móviles */
-    will-change: transform;
-    transform: translateZ(0);
-    -webkit-transform: translateZ(0);
-    pointer-events: none;
-  }
-  .los-ojos-logo-link {
-    position: fixed;
-    z-index: 2;
-    top: 50%;
-    left: 50%;
-    transform: translate3d(-50%, -50%, 0);
-    width: min(25vw, 300px);
-    height: auto;
-    max-height: 300px;
-    display: block;
-    cursor: pointer;
-  }
-  #los-ojos-logo {
-    display: block;
-    width: 100%;
-    height: auto;
-    pointer-events: none;
-    user-select: none;
-    image-rendering: -webkit-optimize-contrast;
-    shape-rendering: geometricPrecision;
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    transition: opacity 0.6s ease;
-  }
-  .screen-reader-text {
-    clip: rect(1px, 1px, 1px, 1px);
-    position: absolute !important;
-    height: 1px;
-    width: 1px;
-    overflow: hidden;
-    word-wrap: normal !important;
-  }
-  body.home .site-header {
-    background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(8px);
-    position: fixed;
-    width: 100%;
-    z-index: 10;
-  }
-  body.home .site-header .site-branding a,
-  body.home .site-header .site-title a {
-    color: #fff;
-  }
-  body.home .site-header .header-navigation .menu-item a {
-    color: rgba(255, 255, 255, 0.8);
-  }
-  body.home .site-header .header-navigation .menu-item a:hover {
-    color: #fff;
-  }
-</style>
-
-<!-- LOGO CON ATRIBUTOS CRÍTICOS PARA LCP/CLS -->
-<a href="<?php echo esc_url(home_url('/servicios/')); ?>" class="los-ojos-logo-link" aria-label="Servicios">
-  <img
-    id="los-ojos-logo"
-    src="<?php echo esc_url(get_stylesheet_directory_uri() . '/assets/losojos_logo.svg'); ?>"
-    alt="Los Ojos"
-    width="300"
-    height="300"
-    fetchpriority="high"
-    loading="eager"
-    decoding="async"
-    data-no-lazy="1"
-  />
-</a>
-
-<!-- MAIN CON role="main" PARA ARREGLAR ACCESIBILIDAD (97 → 100) -->
-<main id="primary" class="site-main los-ojos-hero" role="main">
-  <div class="screen-reader-text">
-    <h1>Los Ojos</h1>
-    <h2>Diseñamos y desarrollamos objetos y experiencias que combinan tecnología, espacio, audiovisual e interacción.</h2>
-    <p>Los Ojos nace de una convicción sencilla: la tecnología como herramienta, lenguaje, medio creativo y forma de pensamiento capaz de configurar nuevas maneras de relacionarnos con el mundo. Un campo de convergencia entre código, imagen, espacio, sonido, movimiento, humanos y más que humanos.</p>
-  </div>
-</main>
-
-<!-- PRELOAD DE MATTER.JS PARA EVITAR BLOQUEO EN MÓVILES -->
-<link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js" as="script" crossorigin>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js" defer></script>
-
-<script>
+// los-ojos-animation.js
 // Wrapper robusto: se ejecuta incluso si LiteSpeed retrasó el DOMContentLoaded
 function initMatterAnimation() {
-  // Esperar a que Matter.js esté disponible (por el defer)
+  // Esperar a que Matter.js esté disponible
   if (typeof Matter === 'undefined') {
     setTimeout(initMatterAnimation, 50);
     return;
@@ -225,7 +113,6 @@ function initMatterAnimation() {
 
   let lastTime = 0;
   function loop(timestamp) {
-    // FORZAR PRIMER FRAME INMEDIATAMENTE (evita bug de móviles)
     if (!lastTime) lastTime = timestamp;
     const delta = timestamp - lastTime;
     lastTime = timestamp;
@@ -275,7 +162,6 @@ function initMatterAnimation() {
     requestAnimationFrame(loop);
   }
 
-  // INICIO DOBLE: rAF + setTimeout como fallback para móviles con ahorro de batería
   requestAnimationFrame(loop);
   setTimeout(() => { if (!lastTime) loop(performance.now()); }, 100);
 }
@@ -286,6 +172,48 @@ if (document.readyState === 'loading') {
 } else {
   initMatterAnimation();
 }
-</script>
 
-<?php get_footer(); ?>
+/**
+ * Cargar animación de Matter.js solo en la portada
+ */
+function los_ojos_enqueue_home_animation() {
+    // Verificar que estamos en la página de inicio
+    if ( ! is_front_page() ) {
+        return;
+    }
+
+    // 1. Cargar Matter.js desde CDN (con defer para no bloquear)
+    wp_enqueue_script(
+        'matter-js',
+        'https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.19.0/matter.min.js',
+        array(),
+        '0.19.0',
+        true // Cargar en el footer
+    );
+    
+    // Añadir atributo defer al script de matter.js
+    add_filter('script_loader_tag', function($tag, $handle) {
+        if ('matter-js' === $handle) {
+            return str_replace(' src', ' defer src', $tag);
+        }
+        return $tag;
+    }, 10, 2);
+
+    // 2. Cargar el CSS de la animación
+    wp_enqueue_style(
+        'los-ojos-animation-css',
+        get_stylesheet_directory_uri() . '/assets/css/los-ojos-animation.css',
+        array(),
+        '1.0.0'
+    );
+
+    // 3. Cargar el JS de la animación (depende de matter-js)
+    wp_enqueue_script(
+        'los-ojos-animation-js',
+        get_stylesheet_directory_uri() . '/assets/js/los-ojos-animation.js',
+        array('matter-js'), // Esto garantiza que Matter.js cargue antes
+        '1.0.0',
+        true // Cargar en el footer
+    );
+}
+add_action( 'wp_enqueue_scripts', 'los_ojos_enqueue_home_animation' );
