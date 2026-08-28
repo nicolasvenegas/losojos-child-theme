@@ -95,7 +95,7 @@ function los_ojos_hero_shortcode($atts) {
         'los-ojos-animation-js',
         get_stylesheet_directory_uri() . '/assets/js/los-ojos-animation.js',
         array('matter-js'),
-        '1.0.0',
+        '1.0.1',
         true
     );
 
