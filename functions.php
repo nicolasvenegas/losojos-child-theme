@@ -50,3 +50,10 @@ add_filter(
     'upload_mimes',
     'losojos_enable_svg_uploads'
 );
+
+
+add_filter( 'get_custom_logo', 'add_dimensions_to_custom_logo' );
+function add_dimensions_to_custom_logo( $html ) {
+    // Reemplaza 200 y 60 con el ancho y alto real de tu logo SVG/PNG
+    return str_replace( '<img ', '<img width="200" height="60" ', $html );
+}
