@@ -102,13 +102,8 @@ function los_ojos_hero_shortcode($atts) {
     // HTML del shortcode
     ob_start();
     ?>
-    <div class="los-ojos-hero-section">
         <canvas id="los-ojos-canvas"></canvas>
-        <div class="los-ojos-content">
-            <h1><?php echo esc_html($atts['titulo']); ?></h1>
-            <p><?php echo esc_html($atts['descripcion']); ?></p>
-        </div>
-    </div>
+
     <?php
     return ob_get_clean();
 }
