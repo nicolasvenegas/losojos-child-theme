@@ -254,8 +254,8 @@ main.wp-block-group {
     padding-bottom: 0 !important;
 }
 
-.home .main{
-    margin-top: 0 !important;
+.home .entry-content{
+    margin-block-start: 0 !important;
 }
 /* =========================================
    RESPONSIVE
