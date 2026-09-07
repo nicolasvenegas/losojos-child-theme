@@ -250,6 +250,15 @@ body.home h1.wp-block-post-title, body.page-id-442 h1.wp-block-post-title{
 }
 
 main.wp-block-group {
+    margin-top: 60px !important;
+    margin-bottom: 80px !important;
+    padding-top: 0 !important; /* O el valor que prefieras, ej: 20px */
+    padding-bottom: 0 !important;
+}
+
+.home main.wp-block-group {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
     padding-top: 0 !important; /* O el valor que prefieras, ej: 20px */
     padding-bottom: 0 !important;
 }
