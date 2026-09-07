@@ -249,12 +249,7 @@ body.home h1.wp-block-post-title, body.page-id-442 h1.wp-block-post-title{
     display: none !important;
 }
 
-main.wp-block-group {
-    margin-top: 60px !important;
-    margin-bottom: 80px !important;
-    padding-top: 0 !important; /* O el valor que prefieras, ej: 20px */
-    padding-bottom: 0 !important;
-}
+
 /* =========================================
    RESPONSIVE
 ========================================= */
