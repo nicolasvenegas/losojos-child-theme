@@ -29,7 +29,7 @@ function losojos_project_meta_shortcode() {
         }
 
         $output .= '<div class="project-meta-item">';
-        $output .= '<strong>' . esc_html($label) . ': </strong>';
+        $output .= '<strong>' . esc_html($label) . ': &nbsp; </strong>';
         $output .= esc_html($value);
         $output .= '</div>';
     }
