@@ -117,11 +117,19 @@ Text Domain: losojos
 }
 
 .project-index-image {
-    display: block;
-    width: 100%;
-    height: auto;
+  display: block;
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 10px;
+}
 
-    border-radius: 10px;
+@media (max-width: 700px) {
+  .project-index-image {
+    height: auto;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+  }
 }
 
 .project-index-content {
