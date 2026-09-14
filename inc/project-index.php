@@ -30,8 +30,8 @@ function losojos_render_projects_index(
 
         $tax_query[] = [
             'taxonomy' => 'disciplina',
-            'field' => 'slug',
-            'terms' => $selected_discipline,
+            'field'    => 'slug',
+            'terms'    => $selected_discipline,
         ];
 
     }
@@ -41,8 +41,8 @@ function losojos_render_projects_index(
 
         $tax_query[] = [
             'taxonomy' => 'tipo-de-proyecto',
-            'field' => 'slug',
-            'terms' => $selected_type,
+            'field'    => 'slug',
+            'terms'    => $selected_type,
         ];
 
     }
@@ -52,19 +52,19 @@ function losojos_render_projects_index(
 
         $tax_query[] = [
             'taxonomy' => 'tema',
-            'field' => 'slug',
-            'terms' => $selected_topic,
+            'field'    => 'slug',
+            'terms'    => $selected_topic,
         ];
 
     }
 
 
     $projects = new WP_Query([
-        'post_type' => 'proyecto',
+        'post_type'      => 'proyecto',
         'posts_per_page' => -1,
-        'orderby' => 'date',
-        'order' => 'DESC',
-        'tax_query' => count($tax_query) > 1
+        'orderby'        => 'date',
+        'order'          => 'DESC',
+        'tax_query'      => count($tax_query) > 1
             ? $tax_query
             : [],
     ]);
@@ -96,8 +96,7 @@ function losojos_render_projects_index(
         <?php if ($projects->have_posts()): ?>
 
 
-            <?php while ($projects->have_posts()):
-                $projects->the_post(); ?>
+            <?php while ($projects->have_posts()): $projects->the_post(); ?>
 
 
                 <article class="project-index-card">
@@ -116,10 +115,9 @@ function losojos_render_projects_index(
 
                         echo get_the_post_thumbnail(
                             get_the_ID(),
-                            'full',
+                            'large',
                             [
-                                'class' => 'project-index-image',
-                                'sizes' => '25vw'
+                                'class' => 'project-index-image'
                             ]
                         );
 
@@ -251,8 +249,12 @@ function losojos_render_projects_index(
                                 ?>
 
 
-                                <a href="<?php echo esc_url($filter_url); ?>" class="project-filter-link" data-filter="tipo-de-proyecto"
-                                    data-value="<?php echo esc_attr($term->slug); ?>">
+                                <a
+                                    href="<?php echo esc_url($filter_url); ?>"
+                                    class="project-filter-link"
+                                    data-filter="tipo-de-proyecto"
+                                    data-value="<?php echo esc_attr($term->slug); ?>"
+                                >
 
                                     <?php echo esc_html($term->name); ?>
 
@@ -319,8 +321,12 @@ function losojos_render_projects_index(
                                 ?>
 
 
-                                <a href="<?php echo esc_url($filter_url); ?>" class="project-filter-link" data-filter="disciplina"
-                                    data-value="<?php echo esc_attr($term->slug); ?>">
+                                <a
+                                    href="<?php echo esc_url($filter_url); ?>"
+                                    class="project-filter-link"
+                                    data-filter="disciplina"
+                                    data-value="<?php echo esc_attr($term->slug); ?>"
+                                >
 
                                     <?php echo esc_html($term->name); ?>
 
@@ -436,7 +442,11 @@ function losojos_project_index_shortcode()
     ?>
 
 
-    <form class="project-filters" method="get" action="<?php echo esc_url($laboratorio_url); ?>">
+    <form
+        class="project-filters"
+        method="get"
+        action="<?php echo esc_url($laboratorio_url); ?>"
+    >
 
 
         <div class="project-filter">
@@ -447,7 +457,10 @@ function losojos_project_index_shortcode()
             </label>
 
 
-            <select id="filter-disciplina" name="disciplina">
+            <select
+                id="filter-disciplina"
+                name="disciplina"
+            >
 
 
                 <option value="">
@@ -458,7 +471,7 @@ function losojos_project_index_shortcode()
                 <?php
 
                 $disciplines = get_terms([
-                    'taxonomy' => 'disciplina',
+                    'taxonomy'   => 'disciplina',
                     'hide_empty' => true,
                 ]);
 
@@ -470,10 +483,13 @@ function losojos_project_index_shortcode()
                         ?>
 
 
-                        <option value="<?php echo esc_attr($discipline->slug); ?>" <?php selected(
-                               $selected_discipline,
-                               $discipline->slug
-                           ); ?>>
+                        <option
+                            value="<?php echo esc_attr($discipline->slug); ?>"
+                            <?php selected(
+                                $selected_discipline,
+                                $discipline->slug
+                            ); ?>
+                        >
 
                             <?php echo esc_html($discipline->name); ?>
 
@@ -504,7 +520,10 @@ function losojos_project_index_shortcode()
             </label>
 
 
-            <select id="filter-tipo" name="tipo-de-proyecto">
+            <select
+                id="filter-tipo"
+                name="tipo-de-proyecto"
+            >
 
 
                 <option value="">
@@ -515,7 +534,7 @@ function losojos_project_index_shortcode()
                 <?php
 
                 $types = get_terms([
-                    'taxonomy' => 'tipo-de-proyecto',
+                    'taxonomy'   => 'tipo-de-proyecto',
                     'hide_empty' => true,
                 ]);
 
@@ -527,10 +546,13 @@ function losojos_project_index_shortcode()
                         ?>
 
 
-                        <option value="<?php echo esc_attr($type->slug); ?>" <?php selected(
-                               $selected_type,
-                               $type->slug
-                           ); ?>>
+                        <option
+                            value="<?php echo esc_attr($type->slug); ?>"
+                            <?php selected(
+                                $selected_type,
+                                $type->slug
+                            ); ?>
+                        >
 
                             <?php echo esc_html($type->name); ?>
 
@@ -561,7 +583,10 @@ function losojos_project_index_shortcode()
             </label>
 
 
-            <select id="filter-tema" name="tema">
+            <select
+                id="filter-tema"
+                name="tema"
+            >
 
 
                 <option value="">
@@ -572,7 +597,7 @@ function losojos_project_index_shortcode()
                 <?php
 
                 $topics = get_terms([
-                    'taxonomy' => 'tema',
+                    'taxonomy'   => 'tema',
                     'hide_empty' => true,
                 ]);
 
@@ -584,10 +609,13 @@ function losojos_project_index_shortcode()
                         ?>
 
 
-                        <option value="<?php echo esc_attr($topic->slug); ?>" <?php selected(
-                               $selected_topic,
-                               $topic->slug
-                           ); ?>>
+                        <option
+                            value="<?php echo esc_attr($topic->slug); ?>"
+                            <?php selected(
+                                $selected_topic,
+                                $topic->slug
+                            ); ?>
+                        >
 
                             <?php echo esc_html($topic->name); ?>
 
@@ -617,7 +645,10 @@ function losojos_project_index_shortcode()
         ): ?>
 
 
-            <a class="project-filters-reset" href="<?php echo esc_url($laboratorio_url); ?>">
+            <a
+                class="project-filters-reset"
+                href="<?php echo esc_url($laboratorio_url); ?>"
+            >
 
                 Limpiar filtros
 
@@ -644,7 +675,10 @@ function losojos_project_index_shortcode()
     ?>
 
 
-    <div id="projects-index-container" aria-live="polite">
+    <div
+        id="projects-index-container"
+        aria-live="polite"
+    >
 
         <?php
 
@@ -674,269 +708,269 @@ function losojos_project_index_shortcode()
 
     <script>
 
-        document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function () {
 
-            const filters = document.querySelector('.project-filters');
-            const container = document.getElementById('projects-index-container');
+        const filters = document.querySelector('.project-filters');
+        const container = document.getElementById('projects-index-container');
 
-            if (!filters || !container) {
+        if (!filters || !container) {
+            return;
+        }
+
+
+        /*
+         * ----------------------------------------------
+         * CONSTRUIR URL
+         * ----------------------------------------------
+         */
+
+        function buildUrl() {
+
+            const url = new URL(
+                filters.getAttribute('action'),
+                window.location.origin
+            );
+
+            const formData = new FormData(filters);
+
+            for (const [key, value] of formData.entries()) {
+
+                if (value) {
+                    url.searchParams.set(key, value);
+                }
+
+            }
+
+            return url;
+
+        }
+
+
+        /*
+         * ----------------------------------------------
+         * ACTUALIZAR FILTROS
+         * ----------------------------------------------
+         */
+
+        async function updateProjects(pushState = true) {
+
+            const url = buildUrl();
+
+            container.classList.add('is-loading');
+
+            try {
+
+                const response = await fetch(url.toString(), {
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Error al cargar los proyectos.');
+                }
+
+                const html = await response.text();
+
+                const parser = new DOMParser();
+
+                const doc = parser.parseFromString(
+                    html,
+                    'text/html'
+                );
+
+                const newContainer =
+                    doc.querySelector('#projects-index-container');
+
+                if (!newContainer) {
+                    throw new Error('No se encontró el índice de proyectos.');
+                }
+
+                container.innerHTML = newContainer.innerHTML;
+
+                if (pushState) {
+
+                    window.history.pushState(
+                        {},
+                        '',
+                        url.toString()
+                    );
+
+                }
+
+                updateSelects(url);
+
+            } catch (error) {
+
+                /*
+                 * Si algo falla, utilizamos la navegación
+                 * normal de WordPress.
+                 */
+
+                window.location.href = url.toString();
+
+            } finally {
+
+                container.classList.remove('is-loading');
+
+            }
+
+        }
+
+
+        /*
+         * ----------------------------------------------
+         * ACTUALIZAR SELECTS
+         * ----------------------------------------------
+         */
+
+        function updateSelects(url) {
+
+            const params = url.searchParams;
+
+            const discipline =
+                filters.querySelector('[name="disciplina"]');
+
+            const type =
+                filters.querySelector('[name="tipo-de-proyecto"]');
+
+            const topic =
+                filters.querySelector('[name="tema"]');
+
+
+            if (discipline) {
+
+                discipline.value =
+                    params.get('disciplina') || '';
+
+            }
+
+
+            if (type) {
+
+                type.value =
+                    params.get('tipo-de-proyecto') || '';
+
+            }
+
+
+            if (topic) {
+
+                topic.value =
+                    params.get('tema') || '';
+
+            }
+
+        }
+
+
+        /*
+         * ----------------------------------------------
+         * SELECTS
+         * ----------------------------------------------
+         */
+
+        filters.addEventListener('change', function (event) {
+
+            if (
+                event.target.matches('select')
+            ) {
+
+                updateProjects(true);
+
+            }
+
+        });
+
+
+        /*
+         * ----------------------------------------------
+         * ENLACES DE TAXONOMÍAS
+         * ----------------------------------------------
+         */
+
+        container.addEventListener('click', function (event) {
+
+            const link =
+                event.target.closest('.project-filter-link');
+
+            if (!link) {
                 return;
             }
 
+            event.preventDefault();
+
+            const url = new URL(
+                link.href,
+                window.location.origin
+            );
 
             /*
-             * ----------------------------------------------
-             * CONSTRUIR URL
-             * ----------------------------------------------
+             * Al seleccionar un filtro desde un proyecto,
+             * eliminamos los otros filtros.
              */
 
-            function buildUrl() {
+            filters.querySelector('[name="disciplina"]').value =
+                url.searchParams.get('disciplina') || '';
 
-                const url = new URL(
-                    filters.getAttribute('action'),
-                    window.location.origin
-                );
+            filters.querySelector('[name="tipo-de-proyecto"]').value =
+                url.searchParams.get('tipo-de-proyecto') || '';
 
-                const formData = new FormData(filters);
+            filters.querySelector('[name="tema"]').value =
+                url.searchParams.get('tema') || '';
 
-                for (const [key, value] of formData.entries()) {
+            updateProjects(true);
 
-                    if (value) {
-                        url.searchParams.set(key, value);
-                    }
+        });
 
-                }
 
-                return url;
+        /*
+         * ----------------------------------------------
+         * LIMPIAR FILTROS
+         * ----------------------------------------------
+         */
 
-            }
+        const resetLink =
+            filters.querySelector('.project-filters-reset');
 
+        if (resetLink) {
 
-            /*
-             * ----------------------------------------------
-             * ACTUALIZAR FILTROS
-             * ----------------------------------------------
-             */
-
-            async function updateProjects(pushState = true) {
-
-                const url = buildUrl();
-
-                container.classList.add('is-loading');
-
-                try {
-
-                    const response = await fetch(url.toString(), {
-                        headers: {
-                            'X-Requested-With': 'XMLHttpRequest'
-                        }
-                    });
-
-                    if (!response.ok) {
-                        throw new Error('Error al cargar los proyectos.');
-                    }
-
-                    const html = await response.text();
-
-                    const parser = new DOMParser();
-
-                    const doc = parser.parseFromString(
-                        html,
-                        'text/html'
-                    );
-
-                    const newContainer =
-                        doc.querySelector('#projects-index-container');
-
-                    if (!newContainer) {
-                        throw new Error('No se encontró el índice de proyectos.');
-                    }
-
-                    container.innerHTML = newContainer.innerHTML;
-
-                    if (pushState) {
-
-                        window.history.pushState(
-                            {},
-                            '',
-                            url.toString()
-                        );
-
-                    }
-
-                    updateSelects(url);
-
-                } catch (error) {
-
-                    /*
-                     * Si algo falla, utilizamos la navegación
-                     * normal de WordPress.
-                     */
-
-                    window.location.href = url.toString();
-
-                } finally {
-
-                    container.classList.remove('is-loading');
-
-                }
-
-            }
-
-
-            /*
-             * ----------------------------------------------
-             * ACTUALIZAR SELECTS
-             * ----------------------------------------------
-             */
-
-            function updateSelects(url) {
-
-                const params = url.searchParams;
-
-                const discipline =
-                    filters.querySelector('[name="disciplina"]');
-
-                const type =
-                    filters.querySelector('[name="tipo-de-proyecto"]');
-
-                const topic =
-                    filters.querySelector('[name="tema"]');
-
-
-                if (discipline) {
-
-                    discipline.value =
-                        params.get('disciplina') || '';
-
-                }
-
-
-                if (type) {
-
-                    type.value =
-                        params.get('tipo-de-proyecto') || '';
-
-                }
-
-
-                if (topic) {
-
-                    topic.value =
-                        params.get('tema') || '';
-
-                }
-
-            }
-
-
-            /*
-             * ----------------------------------------------
-             * SELECTS
-             * ----------------------------------------------
-             */
-
-            filters.addEventListener('change', function (event) {
-
-                if (
-                    event.target.matches('select')
-                ) {
-
-                    updateProjects(true);
-
-                }
-
-            });
-
-
-            /*
-             * ----------------------------------------------
-             * ENLACES DE TAXONOMÍAS
-             * ----------------------------------------------
-             */
-
-            container.addEventListener('click', function (event) {
-
-                const link =
-                    event.target.closest('.project-filter-link');
-
-                if (!link) {
-                    return;
-                }
+            resetLink.addEventListener('click', function (event) {
 
                 event.preventDefault();
 
-                const url = new URL(
-                    link.href,
-                    window.location.origin
-                );
+                filters.querySelector('[name="disciplina"]').value = '';
 
-                /*
-                 * Al seleccionar un filtro desde un proyecto,
-                 * eliminamos los otros filtros.
-                 */
+                filters.querySelector('[name="tipo-de-proyecto"]').value = '';
 
-                filters.querySelector('[name="disciplina"]').value =
-                    url.searchParams.get('disciplina') || '';
-
-                filters.querySelector('[name="tipo-de-proyecto"]').value =
-                    url.searchParams.get('tipo-de-proyecto') || '';
-
-                filters.querySelector('[name="tema"]').value =
-                    url.searchParams.get('tema') || '';
+                filters.querySelector('[name="tema"]').value = '';
 
                 updateProjects(true);
 
             });
 
-
-            /*
-             * ----------------------------------------------
-             * LIMPIAR FILTROS
-             * ----------------------------------------------
-             */
-
-            const resetLink =
-                filters.querySelector('.project-filters-reset');
-
-            if (resetLink) {
-
-                resetLink.addEventListener('click', function (event) {
-
-                    event.preventDefault();
-
-                    filters.querySelector('[name="disciplina"]').value = '';
-
-                    filters.querySelector('[name="tipo-de-proyecto"]').value = '';
-
-                    filters.querySelector('[name="tema"]').value = '';
-
-                    updateProjects(true);
-
-                });
-
-            }
+        }
 
 
-            /*
-             * ----------------------------------------------
-             * ATRÁS / ADELANTE DEL NAVEGADOR
-             * ----------------------------------------------
-             */
+        /*
+         * ----------------------------------------------
+         * ATRÁS / ADELANTE DEL NAVEGADOR
+         * ----------------------------------------------
+         */
 
-            window.addEventListener('popstate', function () {
+        window.addEventListener('popstate', function () {
 
-                const url = new URL(
-                    window.location.href
-                );
+            const url = new URL(
+                window.location.href
+            );
 
-                updateSelects(url);
+            updateSelects(url);
 
-                updateProjects(false);
-
-            });
+            updateProjects(false);
 
         });
+
+    });
 
     </script>
 
