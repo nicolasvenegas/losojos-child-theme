@@ -15,7 +15,7 @@ function losojos_project_meta_shortcode() {
         'project_tools' => 'Herramientas / Medios',
         'project_client' => 'Cliente / Institución',
         'project_location' => 'Ubicación',
-        'project_collaborators' => 'Colaboradores',
+        'project_collaborators' => 'Colaboradores/Artista(s)',
     ];
 
     $output = '<div class="project-meta">';
