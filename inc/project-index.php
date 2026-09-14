@@ -115,7 +115,7 @@ function losojos_render_projects_index(
 
                         echo get_the_post_thumbnail(
                             get_the_ID(),
-                            'full',
+                            'large',
                             [
                                 'class' => 'project-index-image'
                             ]
